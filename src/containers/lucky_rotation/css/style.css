@@ -1,0 +1,251 @@
+@charset "utf-8";
+/* CSS Document */
+@font-face {
+font-family: 'mijasultra';
+src:
+	url('../fonts/mijas-ultra-webfont.OTF')format('opentype'),
+	url('../fonts/mijas-ultra-webfont.woff')format('woff'),
+	url('../fonts/mijas-ultra-webfont.woff2')format('woff2');
+font-weight:normal;
+font-style:normal;
+}
+* {font-family: 'mijasultra' !important;}
+html {scroll-behavior: smooth;}
+.page1 {background-image:url(../images/bg1.png); background-size: cover; background-position: center; background-repeat: no-repeat;}
+.content-inner-p1 {height: 1100px; width: 100%; position: relative; background-image:url(../images/bg1a.png); background-position: 50% 55%; background-repeat: no-repeat;}
+.logo-p1 {text-align: center; padding-top: -20px; display: block; position: relative; overflow: auto;}
+.timer-p1 {width: 300px; margin-right: 14%}
+.cell-timer-p1 {background:url(../images/bg-time.png) 4px center no-repeat; width: 64px; height:64px; vertical-align:middle !important; line-height:0 !important; padding-left: 2px;}
+.display-5 {font-size: 2.6rem;}
+.btn-thamgiangay {position: absolute; bottom: 100px; display: block; left: 50%; transform: translate(-50%, 0);}
+.position-absolute-p1 {position:fixed; left:0; top: 15%; background:url(../images/bg-btn-float-right.png) no-repeat; width: 84px; height: 420px; z-index: 999}
+.menu-left-p1 li {width: 60px; margin: 0 auto; display: block; text-align: center}
+.menu-left-p1 li a {color:#FFFFFF; font-size: 20px; line-height:0; padding-top:20px;}
+.pt-6 {padding-top: 4rem !important}
+.pt-6:hover{
+	text-decoration: underline;
+}
+.pt-5a {padding-top: 2.5rem !important}
+.pt-5a:hover{
+	text-decoration: underline;
+}
+.pt-5b {padding-top: 3rem !important}
+
+.page2 {background-image:url(../images/bg-p2.png); background-size: cover; background-position: center center; background-repeat: no-repeat; position: relative;}
+.content-inner-p2 {height: 1100px; width: 100%; position: relative !important; background-image:url(../images/bg2-p2.png); background-position: 14% 57%; background-repeat: no-repeat;}
+.logo-p2 {position: absolute; top: 11%; left: 5%; z-index: 99}
+.vqmm {position: absolute; top: 23%; left: 10%; width: 800px; background-image:url(../images/vqmm-p2.png); background-repeat: no-repeat; background-repeat:'none';background-size: 100%; background-position: center}
+/* .bg_vqmm { z-index: 999;} */
+.btn-logout{position: absolute; top: 11%; right: 9%; font-size:1.25rem; color:#282652;}
+.btn-logout h5 {background-image:url(../images/btn-dangxuat-p2.png); background-repeat: no-repeat; background-size: 100%; width: 150px; height: 55px;}
+.btn-logout h5 a {line-height: 50px; color:#282652;}
+.btn-logout h5:hover{
+	opacity: 0.8;
+	cursor: pointer;
+}
+.btn-quay {width:200px; height: auto; position: absolute; bottom: 15%; right: 14%;}
+.btn-quay img {width: 200px;}
+.btn-quay .custom-control {font-size: 22px; padding-left: 30px; color:#565656}
+.hv:hover{
+	opacity: 0.8;
+}
+
+.custom-control-label:before {width: 1.2rem; height: 1.2rem; background-color:#d4cff3;}
+.custom-control-label:after {width: 1.2rem; height: 1.2rem;}
+.menu-right {position: absolute; right: 1%; bottom: 20%; background:url(../images/menu-right-p2.png) no-repeat; width: 90px; height: 264px;}
+.menu-right li {width: 60px; margin: 10px auto; display: block; text-align: center}
+.menu-right li a {color:#FFFFFF; font-size: 20px; line-height:0; padding-top:20px;}
+.container.jumbotron {background-color:#fff;}
+.btn-ketqua {background:url(../images/btn-ketquaquayso.png) center no-repeat; width: 495px; height: 93px; margin: 0 auto; font-size:60px; color:#FFFFFF; line-height: 93px;}
+.btn-ketqua img {margin:10px 0 0 15px ;float: left; width: 80px}
+.title-giaidacbiet {color: #e70000; margin-bottom: 0; font-size:26px}
+.bg-giaithuong {background-image:url(../images/bg-giaidacbiet.png); background-repeat: no-repeat; background-position: center; width: 441px; height: 529px; vertical-align:middle}
+.card {border: none !important; background-color: transparent;}
+.tbl-bvd {width: 901px; height: 190px;}
+.title-bvd {font-size: 26px; color:#282652}
+.top-12 {background-image:url(../images/bg-bangvinhdanh.png); background-repeat: no-repeat;}
+.top-12 tr td {vertical-align: middle; font-size: 22px}
+.top100 tr td {vertical-align: middle; font-size: 22px; border: solid 2px #005faf}
+.pag-custom .page-item {margin: 5px;}
+.pag-custom .page-link {background-color: #fff; border-color: #868e94; border-radius: 4px; color:#868e94; font-size:18px; padding: 2px 10px}
+.pag-custom .page-be {background-color: #664cbd; border-color: #664cbd;}
+.pag-custom .page-item.active .page-link {background-color: #664cbd; border-color: #664cbd;}
+.btn-dv {background-color: #664cbd !important; border-color: #664cbd !important; border-radius: 4px !important; color:#FFFFFF !important; margin: 2px 1px}
+a.btn-dv:hover {color: #ffd102;}
+.footer {background:url(../images/bg-footer.jpg) center bottom no-repeat; color:#282652; padding: 60px 0; line-height: 20px}
+.popup-phanthuong h4 {text-align: center; margin-top: -30px; width: 180px;}
+.popup-phanthuong .close {position: absolute; top: -10px; right: -10px; opacity: 1;}
+.popup-phanthuong .close:not(:disabled):not(.disabled):hover {opacity: 1;}
+.modal-dialog {max-width: 768px !important}
+.popup-phanthuong .bg-giaithuong {background-image:url(../images/bg-giaidacbiet.png); background-repeat: no-repeat; background-position: center center; height: 400px; vertical-align:middle; background-size: 100%;}
+.item-giaikhac {padding: 0;}
+.text-giaikhac {line-height: 20px; padding:0 18px 0 23px; font-size: 16px;}
+.popup-phanthuong .text-thele {font-size: 18px; line-height: 20px}
+.bg-orange {background-color:#fcc316;}
+.text-thele code, .text-thele code a {color:#ee0000;}
+.text-thele code label {color:#ee0000; cursor:  pointer; text-decoration: underline; }
+.text-purple {color:#3a1f9f}
+.popup-tudo tr td {font-size:18px; border: solid 2px #005faf}
+.bg-chucmung .card {background-color: transparent;}
+.popup-phanthuong .bg-chucmung {background-image: url(../images/bg-chucmung.png); background-repeat: no-repeat; background-position: center; background-size: 100%; width: 480px; margin: 0 auto;}
+.btn-xacnhan {background: url(../images/bg-xacnhan.png) center center no-repeat; background-size: 120px; width: 130px; margin: 0 auto;}
+.btn-xacnhan:hover{
+	opacity: 0.8;
+}
+.content-chucmung {width: 260px; height: 350px; padding-top: 85px;}
+.text-chucmung {background-color: #fda817; border-radius: 4px; padding: 8px 0;}
+.text-chucmung img {width: 115px}
+#myModal4 .popup-phanthuong { background-color: transparent; border: none;}
+#myModal4 .close {position: absolute; top: 5%; right: 20%; opacity: 1; z-index: 99;}
+.noti-mdt {top: 52%; right: 15%;}
+.noti-tudo {top: 15%; right: 15%;}
+.list-group-flush .list-group-item {display: list-item; padding-left: 30px;}
+.list-group.list-group-flush{
+    max-height: 300px;
+    margin-bottom: 10px;
+    overflow:scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+.ol_popup{
+	list-style: decimal inside;
+}
+
+
+.glow {
+	-webkit-animation: glow 1s ease-in-out infinite alternate;
+	-moz-animation: glow 1s ease-in-out infinite alternate;
+	animation: glow 1s ease-in-out infinite alternate;
+  }
+  
+  @-webkit-keyframes glow {
+	from {
+	  text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #75003b, 0 0 40px #75003b, 0 0 50px #75003b, 0 0 60px #75003b, 0 0 70px #75003b;
+	}
+	to {
+	  text-shadow: 0 0 20px #fff, 0 0 30px #ff4da6, 0 0 40px #ff4da6, 0 0 50px #ff4da6, 0 0 60px #ff4da6, 0 0 70px #ff4da6, 0 0 80px #ff4da6;
+	}
+  }
+  
+  .facebook-responsive {
+	  overflow:hidden;
+	  padding-bottom:56.25%;
+	  position:relative;
+	  height:0;
+  }
+  
+  .facebook-responsive iframe {
+	  left:0;
+	  top:0;
+	  height:100%;
+	  width:100%;
+	  position:absolute;
+  }
+
+@media (max-width: 1024px) {
+	.btn-quay {bottom: 13%; right: 3%;}
+	.content-inner-p1 {background-size: 90%; background-position: 50% 37%;}
+	.btn-thamgiangay {position: absolute; bottom: 150px;}
+}
+
+@media (max-width: 800px) {
+	.content-inner-p1 {background-size: 90%; background-position: 50% 55%;}
+	.btn-thamgiangay {position: absolute; bottom: 150px; width: 150px;}
+	.position-absolute-p1 {top: 20%; left: 1%;}
+	.btn-logout {position: absolute; top: 5%; right: 3%;}
+	.content-inner-p2 {background: none}
+	.logo-p2 {top: 11%; left: 5%; width: 400px;}
+	.vqmm {position: absolute; top: 24%; left: 7%; width: 600px}
+	.menu-right {bottom: 50%;}
+	.btn-quay {bottom: 25%; right: 0;}
+}
+@media (max-width: 640px) {
+	
+	.content-inner-p1 {background-position: 50% 50%;}
+	.position-absolute-p1 {position:fixed; left:1%; top: 20%; background:url(../images/bg-btn-float-right.png) no-repeat; background-size: 100%; width: 40px;}
+	.menu-left-p1 li {width: 40px; margin: 0 auto; display: block; text-align: center}
+	.menu-left-p1 li a {color:#FFFFFF; font-size: 11px;}
+	.pt-6 {padding-top: 1.7rem !important}
+	.pt-5a {padding-top: 1.3rem !important}
+	.pt-5b {padding-top: 1.5rem !important}
+	body {line-height: 0.7 !important}
+	.popup-phanthuong h4 img {margin-top: 7px; width: 160px;}
+	.popup-phanthuong .close img {width: 32px}
+	.popup-phanthuong .text-thele {font-size: 16px;}
+	.popup-phanthuong h3 {font-size: 1.35rem;}
+	.pag-custom .page-be {font-size: 14px; padding:5px 2px;}
+	.content-chucmung {width: 200px; height: 270px; padding-top: 75px;}
+	.text-chucmung {background-color: #fda817; border-radius: 4px; padding: 8px 0;}
+	.btn-xacnhan {background-size: 80px; width: 100px; margin: 0 auto;}
+	.popup-phanthuong .bg-chucmung {width: 100%}
+	.text-chucmung img {width: 80px}
+	.tbl-bvd {width: 900px !important;}
+}
+@media (max-width: 480px) {
+	.content-inner-p1 {background-position: 55% 60%; height: 800px; background-size: 110%;}
+	.timer-p1 {margin: 20px auto; display: block; padding: inherit}
+	.float-right {float:none !important}
+	.btn-thamgiangay {position: absolute; bottom: 100px; width: 120px;}
+	.btn-logout {position: absolute; top: 1%; right: 1%; font-size:14px;}
+	.btn-logout h5 {width: 80px; margin: 0 auto; display: block}
+	.btn-logout h5 a {line-height: 28px; font-size:14px}	
+	.logo-p2 {top: 7%; left: 5%; width: 250px;}
+	.vqmm {position: absolute; top: 15%; left: 10%; width: 320px}
+	.page2 {background-position: -300px -80px; margin-top: -50px;}
+	.btn-quay {width:155px; bottom: 13%; left: 28%;}
+	.btn-quay .custom-control {font-size: 14px; padding-top: 8px; line-height: 30px}
+	.content-inner-p2 {height: 700px;}
+	.menu-right {position: absolute; right: 1%; top: 20%; width: 60px; height: 200px; background-size: 100%;}
+	.menu-right li {margin: 0 auto;}
+	.menu-right li a {font-size: 14px;}
+	.menu-right li:first-child {margin-top: 20px;}
+	.menu-right li:last-child {margin-top: 30px;}
+	.btn-ketqua { background-size: 100%; width: 300px; font-size: 36px}
+	.bg-giaithuong {width: 300px; height: 400px; background-size: 100%;}
+	.btn-ketqua img {margin:27px 0 0 10px ;float: left; width: 40px}
+	.container.jumbotron {margin-top:-130px;}
+	#myModal4 .close {position: absolute; top: 7%; right: 7%; opacity: 1; z-index: 99;}
+	.noti-mdt {top: 45%; right: 15%;}
+	.noti-tudo {top: 12%; right: 15%;}
+}
+@media (max-width: 320px) {
+	.vqmm {position: absolute; top: 16%; left: 3%; width: 300px}
+	.page1, .page2 {padding: 0;}
+	.noti-mdt {top: 45%; right: 15%;}
+	.noti-tudo {top: 15%; right: 15%;}
+}
+#button {
+  display: inline-block;
+  background-color: #FF9800;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  color: #fff;
+  text-align: center;
+  border-radius: 4px;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  transition: background-color .3s, 
+    opacity .5s, visibility .5s;
+  z-index: 1000;
+}
+#button::after {
+  font-weight: normal;
+  font-style: normal;
+  font-size: 2em;
+  line-height: 50px;
+  color: #fff;
+}
+#button:hover {
+  cursor: pointer;
+  background-color: #333;
+}
+#button:active {
+  background-color: #555;
+}
+#button.show {
+  opacity: 1;
+  visibility: visible;
+}
+
