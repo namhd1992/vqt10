@@ -41,7 +41,7 @@ export default (state = initialState, action) => {
 	}
 }
 
-export const getData = (token, scoinToken) => {
+export const getData = (token) => {
 	var header = {
 		headers: {
 			"Content-Type": "application/json",
@@ -52,7 +52,7 @@ export const getData = (token, scoinToken) => {
 		dispatch({
 			type: PROFILE_REQUEST
 		})
-		var url = Ultilities.base_url() + "profile?scoin_access_token=" + scoinToken;
+		var url = Ultilities.base_url() + "profile";
 		return axios.get(url, header).then(function (response) {
 			dispatch({
 				type: PROFILE_RESPONSE,

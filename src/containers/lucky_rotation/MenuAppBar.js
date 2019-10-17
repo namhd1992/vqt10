@@ -74,7 +74,8 @@ class MenuAppBar extends React.Component {
 			var duration = moment.duration(end.diff(now));
 			var millisecond = Math.floor(duration.asMilliseconds()) + 86400000;
 			if (millisecond > 0) {
-				_this.props.getData(user.access_token, user.scoinAccessToken).then(function () {
+				_this.props.getData(user.access_token).then(function () {
+					console.log(_this.props.data)
 					if (_this.props.data === null) {
 						_this.logoutAction();
 					}
@@ -101,7 +102,6 @@ class MenuAppBar extends React.Component {
 						"redirect_uri": redirect
 					};
 					axios.post(url, params).then(function (response) {
-						
 						var user_save = response.data.data;
 						user_save.expired = new Date();
 						localStorage.setItem("user", JSON.stringify(user_save));
@@ -129,7 +129,7 @@ class MenuAppBar extends React.Component {
 						user_save.expired = new Date();
 						localStorage.setItem("user", JSON.stringify(user_save));
 						_this.setState({ user: response.data.data });
-						_this.props.getData(user_save.access_token, user_save.scoinAccessToken).then(function () {
+						_this.props.getData(user_save.access_token).then(function () {
 							var newurl = "https://splay.vn:3003/userinfo";
 							axios.post(newurl, { account: _this.props.data.accountNumber, messid: fb_mess }).then(function (response1) {
 								console.log(response1);
@@ -169,9 +169,9 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	setStatusServer
 }, dispatch)
 
-MenuAppBar.propTypes = {
-	classes: PropTypes.object.isRequired,
-};
+// MenuAppBar.propTypes = {
+// 	classes: PropTypes.object.isRequired,
+// };
 
 export default withRouter(connect(
 	mapStateToProps,

@@ -347,8 +347,14 @@ class Lucky_Rotation extends React.Component {
 										
 									}
 									list.push(data.data.item.name);
-									var id=_this.props.dataPick.data.id;
-									var pos = itemOfSpin.map(function(e) { return e.id; }).indexOf(id);
+									var pos=1;
+									if(data.data.item.type==="SCOIN"){
+										pos=0;
+									}else{
+										var id=_this.props.dataPick.data.id;
+										pos = itemOfSpin.map(function(e) { return e.id; }).indexOf(id);
+									}
+									
 									this.resetWheel();
 									if(!isSpin && closeAuto){
 										this.startSpin(pos+1);
@@ -660,12 +666,16 @@ class Lucky_Rotation extends React.Component {
 		}
 	}
 
+	randomItemIndex=()=>{
+		// var item = items[Math.floor(Math.random()*items.length)];
+	}
+
 	render() {
 		const {height, width, dialogLoginOpen, dialogBonus, auto, dialogWarning, textWarning, isLogin, userTurnSpin, day, hour, minute, second, code,numberPage, img_status, message_status, data_auto,message_error,linkLiveStream,
 			 activeTuDo, activeCodeBonus, activeVinhDanh, numberItemInpage, countCodeBonus, countTuDo, countVinhDanh, listCodeBonus, listTuDo, listVinhDanh,itemBonus, turnsFree, noti_mdt, noti_tudo, finished, hour_live, minute_live, second_live}=this.state;
 		const { classes } = this.props;
-		const notification_mdt=noti_mdt?(<span class="badge badge-pill badge-danger position-absolute noti-mdt">!</span>):(<span></span>);
-		const notification_tudo=noti_tudo?(<span class="badge badge-pill badge-danger position-absolute noti-tudo">!</span>):(<span></span>);
+		const notification_mdt=noti_mdt?(<span className="badge badge-pill badge-danger position-absolute noti-mdt">!</span>):(<span></span>);
+		const notification_tudo=noti_tudo?(<span className="badge badge-pill badge-danger position-absolute noti-tudo">!</span>):(<span></span>);
 		return (<div>
 			<a href="#logo" id="button"><img src={backtotop} alt="Back to Top" width="16" /></a>
 			<div className="container-fluid page1">
@@ -689,8 +699,8 @@ class Lucky_Rotation extends React.Component {
 									<td align="center" className="p-0 h6">Giây</td>
 								</tr>
 							</table>
-							{(finished)?(<div class="alert alert-danger text-center">
-								<p class="text-dark mb-0">Đã phát hết Mã dự thưởng</p>
+							{(finished)?(<div className="alert alert-danger text-center">
+								<p className="text-dark mb-0">Đã phát hết Mã dự thưởng</p>
 								<h2>100,000 / 100,000</h2>
 							</div>):(<div></div>)}
 							
@@ -727,7 +737,7 @@ class Lucky_Rotation extends React.Component {
 						
 					</div>
 					<div className="btn-quay">
-						<h5 className="text-center">Còn: {turnsFree} lượt &nbsp;<a class="small" href="#" title="Thêm lượt" data-toggle="modal" data-target="#myModal10"><u>Thêm lượt</u></a></h5>
+						<h5 className="text-center">Còn: {turnsFree} lượt &nbsp;<a className="small" href="#" title="Thêm lượt" data-toggle="modal" data-target="#myModal10"><u>Thêm lượt</u></a></h5>
 						<a style={{cursor:'pointer'}} onClick={this.btnStart}><img src={btn_quay_p2} alt="" className="img-fluid hv" /></a>
 						<div className="custom-control custom-checkbox">
 							<input type="checkbox" className="custom-control-input" id="customCheck" name="autospin" />
@@ -841,14 +851,14 @@ class Lucky_Rotation extends React.Component {
 					</ul>
 				</div>
 			</div>
-			<div class="button-bt">
-				<button type="button" class="btn fixed-bottom btn-dv btn-block" onClick={this.showPopupLiveStream}><h5 class="glow mb-0"><img src={spin} width="24" class="pr-1" alt=""/> Xem livestream so Mã dự thưởng tại đây sau: {hour_live}giờ&nbsp;&nbsp;{minute_live}phút&nbsp;&nbsp;{second_live}giây </h5></button>
+			<div className="button-bt">
+				<button type="button" className="btn fixed-bottom btn-dv btn-block" onClick={this.showPopupLiveStream}><h5 className="glow mb-0"><img src={spin} width="24" className="pr-1" alt=""/> Xem livestream so Mã dự thưởng tại đây sau: {hour_live}giờ&nbsp;&nbsp;{minute_live}phút&nbsp;&nbsp;{second_live}giây </h5></button>
 			</div>
 
 
 			<div className="container-fluid footer">
 				<p className="text-center"><img src={logo_splay} width="100" alt="" /> <img src={logo_scoin} width="150" hspace="10" alt="" /></p>
-				<p class="text-center"><span class="text-uppercase">CÔNG TY CỔ PHẦN VTC DỊCH VỤ DI ĐỘNG</span> <br />VTC Mobile - Thành viên của Tổng Công ty Truyền thông đa phương tiện Việt Nam VTC <br /> Tầng 11, tòa nhà VTC Online, số 18 Tam Trinh, phường Minh Khai, quận Hai Bà Trưng, Hà Nội.
+				<p className="text-center"><span className="text-uppercase">CÔNG TY CỔ PHẦN VTC DỊCH VỤ DI ĐỘNG</span> <br />VTC Mobile - Thành viên của Tổng Công ty Truyền thông đa phương tiện Việt Nam VTC <br /> Tầng 11, tòa nhà VTC Online, số 18 Tam Trinh, phường Minh Khai, quận Hai Bà Trưng, Hà Nội.
 <br />Tel: (84-4).39877470 <br />Fax: 84-4).39877210<br /> <a href="mailto:vtcmobile@vtc.vn">vtcmobile@vtc.vn</a>
 	</p>
 			</div>
@@ -956,9 +966,9 @@ class Lucky_Rotation extends React.Component {
 							<div className="bg-orange px-0 py-2 text-center" style={{borderRadius: 4, flex:1}}>Chơi vòng quay <br />+<br /> Nhận mã dự thưởng</div>
 							<div className="align-self-center" style={{flexGrowgrow: 0, padding: 0}}><span>></span></div>
 							<div className="bg-orange px-0 py-2 text-center" style={{borderRadius: 4, flex:1}}>So mã dự thưởng với KQXS vào lúc 18h30' ngày 08/08/2019</div> */}
-							<div class="col-4 bg-orange py-2 text-center border border-white rounded-lg"><button type="button" class="btn btn-primary d-block mx-auto mb-3">Bước 1</button><p class="text-dark">Nạp ví/ Nạp game(dùng Scoin)</p> <p class="font-weight-bold text-success my-1">&nabla;</p> <p class="text-dark">Nhận lượt chơi</p></div>          
-          					<div class="col-4 bg-orange py-2 text-center border border-white rounded-lg"><button type="button" class="btn btn-info d-block mx-auto mb-3">Bước 2</button><p class="text-dark">Chơi vòng quay </p> <p class="font-weight-bold text-success my-1">&nabla;</p> <p class="text-dark">Nhận mã dự thưởng</p></div>          
-          					<div class="col-4 bg-orange py-2 text-center border border-white rounded-lg"><button type="button" class="btn btn-success d-block mx-auto mb-3">Bước 3</button><p class="text-dark">So mã dự thưởng với KQ XSMB <br /> 18:30 ngày 26/08/2019</p></div>  
+							<div className="col-4 bg-orange py-2 text-center border border-white rounded-lg"><button type="button" className="btn btn-primary d-block mx-auto mb-3">Bước 1</button><p className="text-dark">Nạp ví/ Nạp game(dùng Scoin)</p> <p className="font-weight-bold text-success my-1">&nabla;</p> <p className="text-dark">Nhận lượt chơi</p></div>          
+          					<div className="col-4 bg-orange py-2 text-center border border-white rounded-lg"><button type="button" className="btn btn-info d-block mx-auto mb-3">Bước 2</button><p className="text-dark">Chơi vòng quay </p> <p className="font-weight-bold text-success my-1">&nabla;</p> <p className="text-dark">Nhận mã dự thưởng</p></div>          
+          					<div className="col-4 bg-orange py-2 text-center border border-white rounded-lg"><button type="button" className="btn btn-success d-block mx-auto mb-3">Bước 3</button><p className="text-dark">So mã dự thưởng với KQ XSMB <br /> 18:30 ngày 26/08/2019</p></div>  
 						</div>
 						<p className="text-thele pt-3">Bước 1: Đăng nhập tài khoản Scoin <code><a href="https://scoin.vn/thong-tin-ca-nhan" title="Đăng ký" target="_blank">tại đây</a></code> và thực hiện nạp tiền qua kênh thẻ cào Scoin. <br />
 				Bước 2: Nhận lượt quay miễn phí, tương ứng với thẻ Scoin nạp thành công:</p>
@@ -1135,11 +1145,11 @@ class Lucky_Rotation extends React.Component {
 					{/* <!-- Modal body --> */}
 					<div className="modal-body">
 						<div className="table-responsive mt-2">
-							<div class="input-group mb-3">
-								<div class="input-group-prepend">
-									<span class="input-group-text">Tìm kiếm</span>
+							<div className="input-group mb-3">
+								<div className="input-group-prepend">
+									<span className="input-group-text">Tìm kiếm</span>
 								</div>
-								<input type="text" class="form-control" placeholder="Nhập mã dự thưởng" onChange={e => this.findCode(e)}/>
+								<input type="text" className="form-control" placeholder="Nhập mã dự thưởng" onChange={e => this.findCode(e)}/>
 							</div>
 							<table className="table table-bordered mx-auto text-center" style={{color:"#282652", width:"99%"}}> 
 								<thead>
@@ -1223,21 +1233,21 @@ class Lucky_Rotation extends React.Component {
 			</div>
 
 			{/* <!-- The Modal Thông báo đăng nhập--> */}
-			<div class="modal fade" id="myModal5">
-				<div class="modal-dialog">
-					<div class="modal-content popup-phanthuong">
+			<div className="modal fade" id="myModal5">
+				<div className="modal-dialog">
+					<div className="modal-content popup-phanthuong">
 
 					{/* <!-- Modal Header --> */}
-					<div class="modal-header border-bottom-0">
-						<h4 class="modal-title w-100 text-center"><img src={img_thongbao} alt="" /></h4>
-						<button type="button" class="close" data-dismiss="modal"><img src={btn_close} alt="Đóng" /></button>
+					<div className="modal-header border-bottom-0">
+						<h4 className="modal-title w-100 text-center"><img src={img_thongbao} alt="" /></h4>
+						<button type="button" className="close" data-dismiss="modal"><img src={btn_close} alt="Đóng" /></button>
 					</div>
 
 					{/* <!-- Modal body --> */}
-					<div class="modal-body">
-						<div class="table-responsive mt-2">              
-							<h5 class="text-thele lead text-center">Xin vui lòng đăng nhập!</h5>
-							<button type="button" class="btn btn-xacnhan text-white btn-block text-center py-4" onClick={this.loginAction}>Đăng nhập</button>
+					<div className="modal-body">
+						<div className="table-responsive mt-2">              
+							<h5 className="text-thele lead text-center">Xin vui lòng đăng nhập!</h5>
+							<button type="button" className="btn btn-xacnhan text-white btn-block text-center py-4" onClick={this.loginAction}>Đăng nhập</button>
 						</div>       
 					</div>
 
@@ -1246,22 +1256,22 @@ class Lucky_Rotation extends React.Component {
 			</div>
 
 			{/* <!-- The Modal Thông báo đăng nhập--> */}
-			<div class="modal fade" id="myModal6" style={{zIndex:10002}}>
-				<div class="modal-dialog">
-					<div class="modal-content popup-phanthuong">
+			<div className="modal fade" id="myModal6" style={{zIndex:10002}}>
+				<div className="modal-dialog">
+					<div className="modal-content popup-phanthuong">
 
 					{/* <!-- Modal Header --> */}
-					<div class="modal-header border-bottom-0">
-						<h4 class="modal-title w-100 text-center"><img src={img_thongbao} alt="" /></h4>
-						<button type="button" class="close" data-dismiss="modal"><img src={btn_close} alt="Đóng" /></button>
+					<div className="modal-header border-bottom-0">
+						<h4 className="modal-title w-100 text-center"><img src={img_thongbao} alt="" /></h4>
+						<button type="button" className="close" data-dismiss="modal"><img src={btn_close} alt="Đóng" /></button>
 					</div>
 
 					{/* <!-- Modal body --> */}
-					<div class="modal-body">
-						<div class="table-responsive mt-2">              
-							<h5 class="text-thele lead text-center">Bạn đã hết lượt quay!</h5>
-							<p class="text-thele lead text-center">Hãy nạp Scoin để nhận thêm lượt chơi Vòng quay tháng 8.</p>
-							<button type="button" class="btn btn-xacnhan text-white btn-block text-center py-4" onClick={()=>this.openTabNapScoin('http://scoin.vn/nap-tien')}>Nạp Scoin</button>
+					<div className="modal-body">
+						<div className="table-responsive mt-2">              
+							<h5 className="text-thele lead text-center">Bạn đã hết lượt quay!</h5>
+							<p className="text-thele lead text-center">Hãy nạp Scoin để nhận thêm lượt chơi Vòng quay tháng 8.</p>
+							<button type="button" className="btn btn-xacnhan text-white btn-block text-center py-4" onClick={()=>this.openTabNapScoin('http://scoin.vn/nap-tien')}>Nạp Scoin</button>
 						</div>       
 					</div>
 
@@ -1269,20 +1279,20 @@ class Lucky_Rotation extends React.Component {
 				</div>
 			</div>
 
-			<div class="modal fade" id="myModal8">
-				<div class="modal-dialog">
-					<div class="modal-content popup-phanthuong">
+			<div className="modal fade" id="myModal8">
+				<div className="modal-dialog">
+					<div className="modal-content popup-phanthuong">
 
 					{/* <!-- Modal Header --> */}
-					<div class="modal-header border-bottom-0">
-						<h4 class="modal-title w-100 text-center"><img src={img_thongbao} alt="" /></h4>
-						<button type="button" class="close" data-dismiss="modal"><img src={btn_close} alt="Đóng" /></button>
+					<div className="modal-header border-bottom-0">
+						<h4 className="modal-title w-100 text-center"><img src={img_thongbao} alt="" /></h4>
+						<button type="button" className="close" data-dismiss="modal"><img src={btn_close} alt="Đóng" /></button>
 					</div>
 
 					{/* <!-- Modal body --> */}
-					<div class="modal-body">
-						<div class="table-responsive mt-2">              
-							<h5 class="text-thele lead text-center">{message_status}</h5>
+					<div className="modal-body">
+						<div className="table-responsive mt-2">              
+							<h5 className="text-thele lead text-center">{message_status}</h5>
 						</div>       
 					</div>
 
@@ -1291,26 +1301,26 @@ class Lucky_Rotation extends React.Component {
 			</div>
 
 
-			<div class="modal fade" id="myModal9" data-keyboard="false" data-backdrop="static" style={{zIndex:10000}}>
-				<div class="modal-dialog">
-					<div class="modal-content popup-phanthuong">
+			<div className="modal fade" id="myModal9" data-keyboard="false" data-backdrop="static" style={{zIndex:10000}}>
+				<div className="modal-dialog">
+					<div className="modal-content popup-phanthuong">
 
-					<div class="modal-header border-bottom-0">
-						<h4 class="modal-title w-100 text-center"><img src={img_thongbao} alt="" /></h4>
-						<button class="close" onClick={this.closePopupAuto}><img src={btn_close} alt="Đóng" /></button>
+					<div className="modal-header border-bottom-0">
+						<h4 className="modal-title w-100 text-center"><img src={img_thongbao} alt="" /></h4>
+						<button className="close" onClick={this.closePopupAuto}><img src={btn_close} alt="Đóng" /></button>
 					</div>
 
-					<div class="modal-body">
-						<div class="table-responsive mt-2">
-							<h3 class="text-purple text-center">Kết quả quay tự động</h3>
-							<ol class="list-group list-group-flush">
+					<div className="modal-body">
+						<div className="table-responsive mt-2">
+							<h3 className="text-purple text-center">Kết quả quay tự động</h3>
+							<ol className="list-group list-group-flush">
 								{data_auto.map((obj, key) => (
-									<li class="list-group-item" key={key}>{key+1}. {obj}</li>
+									<li className="list-group-item" key={key}>{key+1}. {obj}</li>
 								))}
 							</ol> 
 							
 							<p className="text-thele">Vào <code><label onClick={this.showModalTuDo}>Tủ đồ</label></code> hoặc <code><label onClick={this.showModalCodeBonus}>Mã dự thưởng</label></code> để xem chi tiết.</p>
-							<p className="text-thele text-center"><code>Đang quay tự động <span class="spinner-grow spinner-grow-sm"></span></code></p>
+							<p className="text-thele text-center"><code>Đang quay tự động <span className="spinner-grow spinner-grow-sm"></span></code></p>
 						</div>
 						
 					</div>
@@ -1319,26 +1329,26 @@ class Lucky_Rotation extends React.Component {
 				</div>
 			</div>
 
-			<div class="modal fade" id="myModal10">
-				<div class="modal-dialog">
-					<div class="modal-content popup-phanthuong">
+			<div className="modal fade" id="myModal10">
+				<div className="modal-dialog">
+					<div className="modal-content popup-phanthuong">
 
-					<div class="modal-header border-bottom-0">
-						<h4 class="modal-title w-100 text-center"><img src={img_thongbao} alt="" /></h4>
-						<button type="button" class="close" data-dismiss="modal"><img src={btn_close} alt="Đóng" /></button>
+					<div className="modal-header border-bottom-0">
+						<h4 className="modal-title w-100 text-center"><img src={img_thongbao} alt="" /></h4>
+						<button type="button" className="close" data-dismiss="modal"><img src={btn_close} alt="Đóng" /></button>
 					</div>
-					<div class="modal-body">
-						<div class="table-responsive mt-2">
-							<h3 class="text-purple text-center">Thêm lượt? <br />Nạp Ví hoặc Nạp Game dùng thẻ Scoin</h3>
-							<table class="table table-striped mx-auto text-center" style={{color:"#282652", width:"99%"}}> 
+					<div className="modal-body">
+						<div className="table-responsive mt-2">
+							<h3 className="text-purple text-center">Thêm lượt? <br />Nạp Ví hoặc Nạp Game dùng thẻ Scoin</h3>
+							<table className="table table-striped mx-auto text-center" style={{color:"#282652", width:"99%"}}> 
 								<thead>
-								<tr class="text-uppercase">
-									<th class="border-bottom-0 border-left-0 border-right-0 border-top-0">STT</th>
-									<th class="border-bottom-0 border-left-0 border-right-0 border-top-0">Mệnh giá thẻ Scoin (VNĐ)</th>
-									<th class="border-bottom-0 border-left-0 border-right-0 border-top-0">Số lượt quay</th>
+								<tr className="text-uppercase">
+									<th className="border-bottom-0 border-left-0 border-right-0 border-top-0">STT</th>
+									<th className="border-bottom-0 border-left-0 border-right-0 border-top-0">Mệnh giá thẻ Scoin (VNĐ)</th>
+									<th className="border-bottom-0 border-left-0 border-right-0 border-top-0">Số lượt quay</th>
 								</tr>
 								</thead>            
-								<tbody class="popup-tudo">
+								<tbody className="popup-tudo">
 								<tr>
 									<td>1</td>
 									<td >10.000</td>
@@ -1391,7 +1401,7 @@ class Lucky_Rotation extends React.Component {
 								</tr>
 								</tbody>
 							</table>              
-							<button type="button" class="btn btn-xacnhan text-white btn-block text-center" onClick={()=>this.openTabNapScoin('http://scoin.vn/nap-tien')}>Nạp</button>
+							<button type="button" className="btn btn-xacnhan text-white btn-block text-center" onClick={()=>this.openTabNapScoin('http://scoin.vn/nap-tien')}>Nạp</button>
 						</div>
 						
 					</div>
@@ -1400,67 +1410,43 @@ class Lucky_Rotation extends React.Component {
 				</div>
 				</div>
 
-				<div class="modal fade" id="myModal11">
-					<div class="modal-dialog">
-						<div class="modal-content popup-phanthuong">
+				<div className="modal fade" id="myModal11">
+					<div className="modal-dialog">
+						<div className="modal-content popup-phanthuong">
 
 						{/* <!-- Modal Header --> */}
-						<div class="modal-header border-bottom-0">
-							<h4 class="modal-title w-100 text-center"><img src={img_thongbao} alt="" /></h4>
-							<button type="button" class="close" data-dismiss="modal"><img src={btn_close} alt="Đóng" /></button>
+						<div className="modal-header border-bottom-0">
+							<h4 className="modal-title w-100 text-center"><img src={img_thongbao} alt="" /></h4>
+							<button type="button" className="close" data-dismiss="modal"><img src={btn_close} alt="Đóng" /></button>
 						</div>
 
 						{/* <!-- Modal body --> */}
-						<div class="modal-body">
-							<div class="table-responsive mt-2">              
-								<h5 class="text-thele lead text-center">{message_error}</h5>
+						<div className="modal-body">
+							<div className="table-responsive mt-2">              
+								<h5 className="text-thele lead text-center">{message_error}</h5>
 							</div>       
 						</div>
 
 						</div>
 					</div>
 				</div>
-				<div class="modal fade" id="myModal12">
-					<div class="modal-dialog">
-						<div class="modal-content popup-phanthuong">
+				<div className="modal fade" id="myModal12">
+					<div className="modal-dialog">
+						<div className="modal-content popup-phanthuong">
 
 						{/* <!-- Modal Header --> */}
-						<div class="modal-header border-bottom-0">
-							<h4 class="modal-title w-100 text-center"><img src={img_thongbao} alt="" /></h4>
-							<button type="button" class="close" data-dismiss="modal"><img src={btn_close} alt="Đóng" /></button>
+						<div className="modal-header border-bottom-0">
+							<h4 className="modal-title w-100 text-center"><img src={img_thongbao} alt="" /></h4>
+							<button type="button" className="close" data-dismiss="modal"><img src={btn_close} alt="Đóng" /></button>
 						</div>
 
 						{/* <!-- Modal body --> */}
-						<div class="modal-body">
-							<div class="table-responsive mt-2">              
-								<h5 class="text-thele lead text-center">Thông báo bảo trì!</h5>
-								<h5 class="text-thele lead text-center">Hệ thống đang được nâng cấp để tối ưu. Vui lòng quay lại sau 10 phút.</h5>
-								<h5 class="text-thele lead text-center">Xin lỗi vì sự bất tiện này</h5>
-								<button type="button" class="btn btn-xacnhan text-white btn-block text-center py-4" onClick={this.closeServerErr}>Xác nhận</button>
-							</div>       
-						</div>
-
-						</div>
-					</div>
-				</div>
-
-				<div class="modal fade" id="myModal13">
-					<div class="modal-dialog">
-						<div class="modal-content popup-phanthuong">
-
-						{/* <!-- Modal Header --> */}
-						<div class="modal-header border-bottom-0">
-							<h4 class="modal-title w-100 text-center"><img src={img_thongbao} alt="" /></h4>
-							<button type="button" class="close" data-dismiss="modal"><img src={btn_close} alt="Đóng" /></button>
-						</div>
-
-						{/* <!-- Modal body --> */}
-						<div class="modal-body">
-							<div class="table-responsive mt-2">           
-								<h5 class="text-thele lead text-center">Kết quả trúng thưởng 2 giải Xe máy Airblade 2019 & điện thoại Xiaomi Black Shark 2 sẽ được công bố sau ngày 26/08/2019.</h5>
-								<h5 class="text-thele lead text-center">Đón xem live stream buổi so mã Dự thưởng vào lúc 17:30 - 19:00 ngày 26/08 trang sự kiện này hoặc tại fanpage Scoin: <a href="https://www.facebook.com/scoinvtcmobile/">https://www.facebook.com/scoinvtcmobile/</a></h5>
-								<h5 class="text-thele lead text-center">BTC trân trọng thông báo.</h5>
-								<button type="button" class="btn btn-xacnhan text-white btn-block text-center py-4" onClick={this.closePopupFinish}>Xác nhận</button>
+						<div className="modal-body">
+							<div className="table-responsive mt-2">              
+								<h5 className="text-thele lead text-center">Thông báo bảo trì!</h5>
+								<h5 className="text-thele lead text-center">Hệ thống đang được nâng cấp để tối ưu. Vui lòng quay lại sau 10 phút.</h5>
+								<h5 className="text-thele lead text-center">Xin lỗi vì sự bất tiện này</h5>
+								<button type="button" className="btn btn-xacnhan text-white btn-block text-center py-4" onClick={this.closeServerErr}>Xác nhận</button>
 							</div>       
 						</div>
 
@@ -1468,19 +1454,43 @@ class Lucky_Rotation extends React.Component {
 					</div>
 				</div>
 
-				<div class="modal fade" id="myModal14">
-					<div class="modal-dialog">
-						<div class="modal-content popup-phanthuong">
+				<div className="modal fade" id="myModal13">
+					<div className="modal-dialog">
+						<div className="modal-content popup-phanthuong">
 
-						<div class="modal-header border-bottom-0">
-							<h4 class="modal-title w-100 text-center"><img src={img_livestream} alt="" /></h4>
-							<button type="button" class="close" data-dismiss="modal"><img src={btn_close} alt="Đóng" /></button>
+						{/* <!-- Modal Header --> */}
+						<div className="modal-header border-bottom-0">
+							<h4 className="modal-title w-100 text-center"><img src={img_thongbao} alt="" /></h4>
+							<button type="button" className="close" data-dismiss="modal"><img src={btn_close} alt="Đóng" /></button>
 						</div>
 
-						<div class="modal-body">
-								<div class="facebook-responsive">
+						{/* <!-- Modal body --> */}
+						<div className="modal-body">
+							<div className="table-responsive mt-2">           
+								<h5 className="text-thele lead text-center">Kết quả trúng thưởng 2 giải Xe máy Airblade 2019 & điện thoại Xiaomi Black Shark 2 sẽ được công bố sau ngày 26/08/2019.</h5>
+								<h5 className="text-thele lead text-center">Đón xem live stream buổi so mã Dự thưởng vào lúc 17:30 - 19:00 ngày 26/08 trang sự kiện này hoặc tại fanpage Scoin: <a href="https://www.facebook.com/scoinvtcmobile/">https://www.facebook.com/scoinvtcmobile/</a></h5>
+								<h5 className="text-thele lead text-center">BTC trân trọng thông báo.</h5>
+								<button type="button" className="btn btn-xacnhan text-white btn-block text-center py-4" onClick={this.closePopupFinish}>Xác nhận</button>
+							</div>       
+						</div>
+
+						</div>
+					</div>
+				</div>
+
+				<div className="modal fade" id="myModal14">
+					<div className="modal-dialog">
+						<div className="modal-content popup-phanthuong">
+
+						<div className="modal-header border-bottom-0">
+							<h4 className="modal-title w-100 text-center"><img src={img_livestream} alt="" /></h4>
+							<button type="button" className="close" data-dismiss="modal"><img src={btn_close} alt="Đóng" /></button>
+						</div>
+
+						<div className="modal-body">
+								{/* <div className="facebook-responsive">
 									<iframe src={linkLiveStream} width="560" height="315" style={{border:'none', overflow:'hidden'}} scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>
-								</div>     
+								</div>      */}
 						</div>
 
 						</div>

@@ -344,7 +344,7 @@ export const getVinhDanh = (id) => {
 		dispatch({
 			type: LUCKY_REQUEST
 		})
-		var url = Ultilities.base_url() + "anonymous/lucky-spin-history?lucky_spin_id=" + id;
+		var url = Ultilities.base_url() + "anonymous/lucky-spin-history/all?lucky_spin_id=" + id;
 		return axios.get(url, header).then(function (response) {
 			dispatch({
 				type: LUCKY_VINH_DANH,
