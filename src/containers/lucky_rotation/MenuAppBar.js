@@ -3,7 +3,6 @@ import PropTypes from 'prop-types'
 import Ultilities from '../../Ultilities/global'
 import axios from 'axios'
 import moment from 'moment'
-import Badge from 'material-ui/Badge'
 import {
 	getData
 } from '../../modules/profile'

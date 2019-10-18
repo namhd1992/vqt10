@@ -1,7 +1,6 @@
 import React from 'react'
 import { bindActionCreators } from 'redux'
 import Pagination from "react-js-pagination";
-import { withStyles } from "material-ui/styles/index"
 import { connect } from 'react-redux'
 import './css/style.css';
 import {
@@ -48,6 +47,7 @@ import img_maduthuong from './images/img-maduthuong.png';
 import img_thongbao from './images/img-thongbao.png';
 import img_livestream from './images/img-livestream.png';
 import muiten from './images/muiten.png';
+import ReactResizeDetector from 'react-resize-detector'
 import spin from './images/spin.gif';
 import $ from 'jquery';
 import 'bootstrap';
@@ -118,24 +118,26 @@ class Lucky_Rotation extends React.Component {
 		};
 	}
 	componentWillMount(){
-		if (window.innerWidth <= 320) {
-			this.setState({ width: 242, height: 378, img_width:280, img_height:280});
-		}
-		if (window.innerWidth > 320 && window.innerWidth <= 480) {
-			this.setState({ width: 260, height: 405, img_width:300, img_height:300});
-		}
-		if (window.innerWidth > 480 && window.innerWidth <= 600) {
-			this.setState({ width: 400, height: 500, img_width:500, img_height:500});
-		}
-		if (window.innerWidth > 600 && window.innerWidth <= 768) {
-			this.setState({ width: 485, height: 500, img_width:560, img_height:560});
-		}
-		if (window.innerWidth > 768 && window.innerWidth < 1024) {
-			this.setState({ width: 650, height: 700, img_width:750, img_height:750});
-		}
-		if (window.innerWidth >= 1024) {
-			this.setState({ width: 645, height: 830, img_width:752, img_height:752});
-		}
+		// if (window.innerWidth <= 320) {
+		// 	this.setState({ width: 242, height: 378, img_width:280, img_height:280});
+		// }
+		// if (window.innerWidth > 320 && window.innerWidth <= 480) {
+		// 	this.setState({ width: 260, height: 405, img_width:300, img_height:300});
+		// }
+		// if (window.innerWidth > 480 && window.innerWidth <= 600) {
+		// 	this.setState({ width: 400, height: 500, img_width:500, img_height:500});
+		// }
+		// if (window.innerWidth > 600 && window.innerWidth <= 768) {
+		// 	this.setState({ width: 485, height: 500, img_width:560, img_height:560});
+		// }
+		// if (window.innerWidth > 768 && window.innerWidth < 1024) {
+		// 	this.setState({ width: 650, height: 700, img_width:750, img_height:750});
+		// }
+		// if (window.innerWidth >= 1024) {
+		// 	this.setState({ width: 645, height: 830, img_width:752, img_height:752});
+		// }
+
+		this.onResize()
 		window.removeEventListener('scroll', this.handleScroll);
 	}
 
@@ -241,6 +243,27 @@ class Lucky_Rotation extends React.Component {
 	componentWillUnmount() {
 		clearInterval(this.state.intervalId);
 		this.setState({ auto : !this.state.auto});
+	}
+
+	onResize=()=>{
+		if (window.innerWidth <= 320) {
+			this.setState({ width: 242, height: 378, img_width:280, img_height:280});
+		}
+		if (window.innerWidth > 320 && window.innerWidth <= 480) {
+			this.setState({ width: 260, height: 405, img_width:300, img_height:300});
+		}
+		if (window.innerWidth > 480 && window.innerWidth <= 600) {
+			this.setState({ width: 400, height: 500, img_width:500, img_height:500});
+		}
+		if (window.innerWidth > 600 && window.innerWidth <= 768) {
+			this.setState({ width: 485, height: 500, img_width:560, img_height:560});
+		}
+		if (window.innerWidth > 768 && window.innerWidth < 1024) {
+			this.setState({ width: 650, height: 700, img_width:750, img_height:750});
+		}
+		if (window.innerWidth >= 1024) {
+			this.setState({ width: 645, height: 830, img_width:752, img_height:752});
+		}
 	}
 
 	getVinhDanh=()=>{
@@ -1496,6 +1519,7 @@ class Lucky_Rotation extends React.Component {
 						</div>
 					</div>
 				</div>
+				<ReactResizeDetector handleWidth={true} handleHeight={true} onResize={this.onResize} />
 
 
 		</div>)
@@ -1532,4 +1556,4 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 export default connect(
 	mapStateToProps,
 	mapDispatchToProps
-)(withStyles(styles)(Lucky_Rotation))
+)(Lucky_Rotation)
