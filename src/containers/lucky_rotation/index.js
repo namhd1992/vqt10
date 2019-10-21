@@ -26,12 +26,12 @@ import sapdienra from './images/btn-sapdienra.png'
 import ketthuc from './images/btn-ketthuc.png'
 import logo from './images/logo.png';
 import thamgiangay from './images/btn-thamgiangay.gif';
-import logo_p2 from './images/logo-p2.png';
+import iphone_11_pro_max from './images/iphone-11-pro-max.png';
 import vqmm_p2 from './images/vqmm-p2.png';
 import btn_quay_p2 from './images/btn-quay-p2.png';
 import honda from './images/honda.png';
 import iphone_xs from './images/iphone-xs.png';
-import xiaomi_black from './images/xiaomi-black-shark-2.png';
+// import xiaomi_black from './images/xiaomi-black-shark-2.png';
 import icon_bangvinhdanh from './images/icon-bangvinhdanh.png';
 import logo_splay from './images/logo_splay.png';
 import logo_scoin from './images/logo_scoin.png';
@@ -46,7 +46,7 @@ import img_tudo from './images/img-tudo.png';
 import img_maduthuong from './images/img-maduthuong.png';
 import img_thongbao from './images/img-thongbao.png';
 import img_livestream from './images/img-livestream.png';
-import muiten from './images/muiten.png';
+// import muiten from './images/muiten.png';
 import ReactResizeDetector from 'react-resize-detector'
 import spin from './images/spin.gif';
 import $ from 'jquery';
@@ -259,10 +259,10 @@ class Lucky_Rotation extends React.Component {
 			this.setState({ width: 485, height: 500, img_width:560, img_height:560});
 		}
 		if (window.innerWidth > 768 && window.innerWidth < 1024) {
-			this.setState({ width: 650, height: 700, img_width:750, img_height:750});
+			this.setState({ width: 650, height: 650, img_width:750, img_height:750});
 		}
 		if (window.innerWidth >= 1024) {
-			this.setState({ width: 645, height: 830, img_width:752, img_height:752});
+			this.setState({ width: 645, height: 752, img_width:752, img_height:752});
 		}
 	}
 
@@ -708,12 +708,12 @@ class Lucky_Rotation extends React.Component {
 						<div className="timer-p1 float-right">
 							<img src={img_status} alt="Sự kiện đang diễn ra" width="298" className="img-fluid" />
 							<div className="table-responsive">
-							<table className="table table-borderless">
+							<table className="table table-borderless text-white">
 								<tr>
-									<td className="cell-timer-p1 text-white display-5 text-center">{day}</td>
-									<td className="cell-timer-p1 text-white display-5 text-center">{hour}</td>
-									<td className="cell-timer-p1 text-white display-5 text-center">{minute}</td>
-									<td className="cell-timer-p1 text-white display-5 text-center">{second}</td>
+									<td className="cell-timer-p1 display-5 text-center">{day}</td>
+									<td className="cell-timer-p1 display-5 text-center">{hour}</td>
+									<td className="cell-timer-p1 display-5 text-center">{minute}</td>
+									<td className="cell-timer-p1 display-5 text-center">{second}</td>
 								</tr>
 								<tr>
 									<td align="center" className="p-0 h6">Ngày</td>
@@ -745,7 +745,7 @@ class Lucky_Rotation extends React.Component {
 
 			<div id="p2" className="container-fluid page2">
 				<div className="container content-inner-p2">
-					<h1 className="logo-p2"><img src={logo_p2} alt="Logo" width="600" className="img-fluid" /></h1>
+					<h1 className="logo-p2"><img src={logo} alt="Logo" width="600" className="img-fluid" /></h1>
 					<div className="vqmm">
 							<canvas style={{}} id="canvas" width={width} height={height} data-responsiveMinWidth="180"  data-responsiveScaleHeight="true">		
 							</canvas>
@@ -779,32 +779,20 @@ class Lucky_Rotation extends React.Component {
 			{/* End p2 */}
 
 			<div className="container jumbotron">
-				<h2 className="d-block btn-ketqua text-center">Kết quả quay số</h2>
-				<h4 className="text-center py-2 d-block w-100">Tự động cập nhật theo KQ XSMB lúc 18:30 ngày 26/08/2019</h4>
-			
-				<div className="card-deck">
-					<div className="card">
-						<div className="card-body text-center">
-						<h4 className="card-title text-uppercase title-giaidacbiet">Giải đặc biệt</h4>
-						<p className="card-text title-giaidacbiet">Xe máy Honda Airblade 2019</p>
-						<div className="bg-giaithuong d-table-cell align-middle">
-							<img src={honda} alt="Xe máy" className="img-fluid" />
+				<div class="bg-ketquaquayso">
+					<h2 class="d-block text-center text-white text-kqqs display-6 mb-0" style={{fontSize:'2vw'}}>Kết quả quay số</h2>
+					<h4 class="text-center text-white" style={{fontSize:'2vw'}}>Tự động cập nhật theo KQ so Mã dự thưởng vào lúc 16:00 ngày 01/11/2019</h4>
+					<div class="row px-5">
+						<div class="col-6 align-content-center text-center pl-3">
+							<h2 class="text-center pt-4 color-kqqs" style={{fontSize:'2vw'}}>GIẢI ĐẶC BIỆT <br />iPhone 11 Pro Max</h2>
+							<img src={iphone_11_pro_max} width="70%" class="img-fluid text-center" />
 						</div>
-						<h5 className="card-title">Mã số trúng thưởng</h5>
-						<h5 className="card-title" style={{color:'red'}}>58963</h5>
+						<div class="col-6 mstt">
+							<h2 class="text-center color-kqqs" style={{fontSize:'2vw'}}>Mã số trúng thưởng<br /> 
+							<label class="form-control form-control form-control-sm bg-secondary" /></h2>
+							
 						</div>
 					</div>
-					<div className="card">
-						<div className="card-body text-center">
-						<h4 className="card-title text-uppercase title-giaidacbiet">Giải nhất</h4>
-						<p className="card-text title-giaidacbiet">Xiaomi Black Shark 2</p>
-						<div className="bg-giaithuong d-table-cell align-middle">
-							<img src={xiaomi_black} alt="Iphone" width="322" className="img-fluid" />
-						</div>
-						<h5 className="card-title">Mã số trúng thưởng</h5>
-						<h5 className="card-title" style={{color:'red'}}>95499</h5>
-						</div>
-					</div>      
 				</div>
 				<h2 id="bvd" className="d-block btn-ketqua mt-5"><img src={icon_bangvinhdanh} alt="icon" />Bảng vinh danh</h2>
 				<div className="table-responsive mt-4">
@@ -813,23 +801,17 @@ class Lucky_Rotation extends React.Component {
 						<tr className="text-uppercase title-bvd">
 							<th></th>
 							<th>Tên</th>
-							<th>Giải thưởng</th>
+							<th>Phần thưởng</th>
 							<th>Thời gian trúng</th>
 						</tr>
 						</thead>
 						<tbody className="top-12">
 						<tr>
 							<td></td>
-							<td>fb_122598875416***</td>
-							<td>Xe máy Honda Airblade 2019</td>
-							<td>18:30:00 26-08-2019</td>
+							<td>Chưa có</td>
+							<td>iphone 11 Pro Max 256GB</td>
+							<td>Chưa có</td>
 						</tr>
-						<tr>
-							<td></td>
-							<td>tiach***</td>
-							<td>Xiaomi Black Shark 2</td>
-							<td>18:30:00 26-08-2019</td>
-						</tr>              
 						</tbody>
 					</table>
 					<table className="table table-bordered tbl-bvd mx-auto text-center">            
@@ -915,7 +897,7 @@ class Lucky_Rotation extends React.Component {
 							<h3 className="card-title text-uppercase title-giaidacbiet">Giải nhất</h3>
 							<p className="card-text title-giaidacbiet">Xiaomi Black Shark 2</p>
 							<div className="bg-giaithuong d-table-cell align-middle">
-								<img src={xiaomi_black} alt="Iphone" className="img-fluid" />
+								{/* <img src={xiaomi_black} alt="Iphone" className="img-fluid" /> */}
 							</div>
 							<h5 className="card-title">TRỊ GIÁ: 10.000.000 <br /> Số lượng giải: 01</h5>
 							</div>
