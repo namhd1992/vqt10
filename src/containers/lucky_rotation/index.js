@@ -63,6 +63,10 @@ class Lucky_Rotation extends React.Component {
 	constructor(props){
 		super(props);
 		this.state = {
+			limit: 10,
+			offsetTuDo: 0,
+			offsetCode: 0,
+			offsetVinhDanh: 0,
 			numberShow:15,
 			isAll:true,
 			wheelPower:0,
@@ -81,7 +85,6 @@ class Lucky_Rotation extends React.Component {
 			minute:'00', 
 			second:'00',
 			itemBonus:{},
-			numberItemInpage:5,
 			activeCodeBonus:1,
 			activeVinhDanh:1,
 			activeTuDo:1,
@@ -115,6 +118,7 @@ class Lucky_Rotation extends React.Component {
 			minute_live:'00', 
 			second_live:'00',
 			linkLiveStream:'',
+			isLive:false,
 		};
 	}
 	componentWillMount(){
@@ -146,7 +150,7 @@ class Lucky_Rotation extends React.Component {
 	componentDidMount(){
 		const {img_width, img_height}=this.state;
 		var user = JSON.parse(localStorage.getItem("user"));
-		this.timeRemain();
+		this.timeShowLive();
 		if (user !== null) {
 			this.props.getRotationDetailDataUser(user.access_token, 119).then(()=>{
 				var data=this.props.dataRotationWithUser;
@@ -162,7 +166,8 @@ class Lucky_Rotation extends React.Component {
 							}
 							
 						}
-						this.getStatus(data.data.luckySpin)
+						this.getStatus(data.data.luckySpin);
+						this.timeShowLive(data.data.luckySpin.endDate);
 						this.setState({userTurnSpin:data.data.userTurnSpin, itemOfSpin:data.data.itemOfSpin, luckySpin:data.data.luckySpin, turnsFree:(data.data.userTurnSpin.turnsFree+data.data.userTurnSpin.turnsBuy), isLogin:true, linkLiveStream:data.data.luckySpin.linkLiveStream})
 					}else{
 						$('#myModal11').modal('show');
@@ -188,7 +193,8 @@ class Lucky_Rotation extends React.Component {
 								$('#myModal14').modal('show');
 							}
 						}
-						this.getStatus(data.data.luckySpin)
+						this.getStatus(data.data.luckySpin);
+						this.timeShowLive(data.data.luckySpin.endDate);
 						this.setState({userTurnSpin:data.data.userTurnSpin, itemOfSpin:data.data.itemOfSpin, luckySpin:data.data.luckySpin, turnsFree:(data.data.userTurnSpin.turnsFree+data.data.userTurnSpin.turnsBuy), isLogin:false, linkLiveStream:data.data.luckySpin.linkLiveStream})
 					}else{
 						$('#myModal11').modal('show');
@@ -200,7 +206,7 @@ class Lucky_Rotation extends React.Component {
 				}
 			});
 		}
-		this.getVinhDanh();
+		this.getVinhDanh(1);
 		
 		let theWheel = new Wheel({
 			'numSegments'       : 10,         // Specify number of segments.
@@ -266,12 +272,13 @@ class Lucky_Rotation extends React.Component {
 		}
 	}
 
-	getVinhDanh=()=>{
-		this.props.getVinhDanh(119).then(()=>{
+	getVinhDanh=(pageNumber)=>{
+		const {limit}=this.state;
+		this.props.getVinhDanh(119, limit, (pageNumber-1)).then(()=>{
 			var data=this.props.dataVinhDanh;
 			if(data!==undefined){
 				if(data.status==='01'){	
-					this.setState({dataVinhDanh:data.data, countVinhDanh:data.data.length, listVinhDanh:data.data.slice(0, 10)})
+					this.setState({listVinhDanh:data.data, countVinhDanh:data.totalRecords})
 				}else{
 					$('#myModal11').modal('show');
 					this.setState({message_error:'Không lấy được dữ liệu bảng vinh danh.'})
@@ -364,7 +371,7 @@ class Lucky_Rotation extends React.Component {
 											setTimeout(()=>{
 												this.setState({noti_tudo:true})
 											},2000)
-											this.getVinhDanh();	
+											this.getVinhDanh(1);	
 										}
 										this.setState({code:false})
 										
@@ -375,8 +382,6 @@ class Lucky_Rotation extends React.Component {
 										pos=9;
 									}else{
 										var id=_this.props.dataPick.data.id;
-										console.log(id)
-										console.log(itemOfSpin)
 										pos = itemOfSpin.map(function(e) { return e.id; }).indexOf(id);
 									}
 									
@@ -531,19 +536,38 @@ class Lucky_Rotation extends React.Component {
 	// 	}
 	// }
 
-	timeRemain=()=>{
+	timeRemain=(times)=>{
 		var _this=this;
 		setInterval(()=>{
-			var time=(1566815400000-Date.now())/1000;
+			var time=(times-Date.now())/1000;
 			if(time>0){
 				var day=Math.floor(time/86400) > 9 ? Math.floor(time/86400) : `0${Math.floor(time/86400)}`;
 				var hour=Math.floor((time%86400)/3600) > 9 ? Math.floor((time%86400)/3600) : `0${Math.floor((time%86400)/3600)}`;
 				var minute=Math.floor(((time%86400)%3600)/60) > 9 ? Math.floor(((time%86400)%3600)/60) : `0${Math.floor(((time%86400)%3600)/60)}`;
 				var second=Math.ceil(((time%86400)%3600)%60) > 9 ? Math.ceil(((time%86400)%3600)%60) : `0${Math.ceil(((time%86400)%3600)%60)}`;
-				// _this.setState({day:day, hour: hour, minute: minute, second:second})
-				_this.setState({hour_live: hour, minute_live: minute, second_live:second})
+				_this.setState({day:day, hour: hour, minute: minute, second:second})
+				// _this.setState({hour_live: hour, minute_live: minute, second_live:second})
 			}
 		}, 1000);
+	}
+
+	timeShowLive=(times)=>{
+		var now=Date.now();
+		var _this=this;
+		if(now>times){
+			this.setState({isLive:true},()=>{
+				setInterval(()=>{
+					var time=(times-Date.now())/1000;
+					if(time>0){
+						var day=Math.floor(time/86400) > 9 ? Math.floor(time/86400) : `0${Math.floor(time/86400)}`;
+						var hour=Math.floor((time%86400)/3600) > 9 ? Math.floor((time%86400)/3600) : `0${Math.floor((time%86400)/3600)}`;
+						var minute=Math.floor(((time%86400)%3600)/60) > 9 ? Math.floor(((time%86400)%3600)/60) : `0${Math.floor(((time%86400)%3600)/60)}`;
+						var second=Math.ceil(((time%86400)%3600)%60) > 9 ? Math.ceil(((time%86400)%3600)%60) : `0${Math.ceil(((time%86400)%3600)%60)}`;
+						_this.setState({hour_live: hour, minute_live: minute, second_live:second})
+					}
+				}, 1000);
+			});
+		}
 	}
 
 
@@ -565,23 +589,9 @@ class Lucky_Rotation extends React.Component {
 	}
 
 	showModalTuDo=()=>{
-		const {luckySpin}=this.state;
 		var user = JSON.parse(localStorage.getItem("user"));
 		if (user !== null) {
-			this.props.getTuDo(user.access_token, luckySpin.id).then(()=>{
-				var data=this.props.dataTuDo;
-				if(data!==undefined){
-					if(data.status==='01'){
-						this.setState({dataTuDo:data.data, countTuDo:data.data.length, listTuDo: data.data.slice(0,5), noti_tudo:false})
-					}else{
-						$('#myModal11').modal('show');
-						this.setState({message_error:'Chưa tải được dữ liệu. Vui lòng thử lại'})
-					}
-				}else{
-					$('#myModal12').modal('show');
-					this.setState({server_err:true})
-				}
-			});
+			this.getDataTuDo(user,  1);
 			$('#myModal4').modal('hide');
 			$('#myModal2').modal('show');
 		}else {
@@ -589,12 +599,31 @@ class Lucky_Rotation extends React.Component {
 		}
 	}
 
+	getDataTuDo=(user, pageNumber)=>{
+		const {luckySpin, limit}=this.state;
+		// var offsetTuDo=(pageNumber-1)*limit;
+		this.props.getTuDo(user.access_token, luckySpin.id, limit, (pageNumber-1)).then(()=>{
+			var data=this.props.dataTuDo;
+			if(data!==undefined){
+				if(data.status==='01'){
+					this.setState({listTuDo:data.data, countTuDo:data.totalRecords, noti_tudo:false})
+				}else{
+					$('#myModal11').modal('show');
+					this.setState({message_error:'Chưa tải được dữ liệu. Vui lòng thử lại'})
+				}
+			}else{
+				$('#myModal12').modal('show');
+				this.setState({server_err:true})
+			}
+		});
+	}
+
 	hideModalTuDo=()=>{
 		$('#myModal2').modal('hide');
 	}
 
 	showModalCodeBonus=()=>{
-		const {luckySpin}=this.state;
+		const {luckySpin, offsetCode, limit}=this.state;
 		var user = JSON.parse(localStorage.getItem("user"));
 		if(user !== null){
 			this.props.getCodeBonus(user.access_token, luckySpin.id, 'LUCKY_NUMBER').then(()=>{
@@ -649,9 +678,12 @@ class Lucky_Rotation extends React.Component {
 
 
 	handlePageChangeTuDo=(pageNumber)=> {
-		const {dataTuDo}=this.state;
-		var newPosition=(pageNumber-1)*5
-		this.setState({activeTuDo: pageNumber, listTuDo: dataTuDo.slice(newPosition, newPosition+5)});
+		var user = JSON.parse(localStorage.getItem("user"));
+		this.setState({activeTuDo: pageNumber},()=>{
+			this.getDataTuDo(user, pageNumber)
+		})
+		// var newPosition=(pageNumber-1)*5
+		// this.setState({activeTuDo: pageNumber, listTuDo: dataTuDo.slice(newPosition, newPosition+5)});
 	}
 
 	handlePageChangeCodeBonus=(pageNumber)=> {
@@ -661,9 +693,12 @@ class Lucky_Rotation extends React.Component {
 	}
 
 	handlePageChangeVinhDanh=(pageNumber)=> {
-		const {dataVinhDanh}=this.state;
-		var newPosition=(pageNumber-1)*10
-		this.setState({activeVinhDanh: pageNumber, listVinhDanh: dataVinhDanh.slice(newPosition, newPosition+10)});
+		this.setState({activeVinhDanh: pageNumber},()=>{
+			this.getVinhDanh(pageNumber)
+		})
+		// const {dataVinhDanh}=this.state;
+		// var newPosition=(pageNumber-1)*10
+		// this.setState({activeVinhDanh: pageNumber, listVinhDanh: dataVinhDanh.slice(newPosition, newPosition+10)});
 	}
 
 	openTabNapScoin=(url)=> {
@@ -697,7 +732,7 @@ class Lucky_Rotation extends React.Component {
 
 	render() {
 		const {height, width, dialogLoginOpen, dialogBonus, auto, dialogWarning, textWarning, isLogin, userTurnSpin, day, hour, minute, second, code,numberPage, img_status, message_status, data_auto,message_error,linkLiveStream,
-			 activeTuDo, activeCodeBonus, activeVinhDanh, numberItemInpage, countCodeBonus, countTuDo, countVinhDanh, listCodeBonus, listTuDo, listVinhDanh,itemBonus, turnsFree, noti_mdt, noti_tudo, finished, hour_live, minute_live, second_live}=this.state;
+			 activeTuDo, activeCodeBonus, activeVinhDanh, limit, countCodeBonus, countTuDo, countVinhDanh, listCodeBonus, listTuDo, listVinhDanh,itemBonus, turnsFree, noti_mdt, noti_tudo, finished, hour_live, minute_live, second_live, isLive}=this.state;
 		const { classes } = this.props;
 		const notification_mdt=noti_mdt?(<span className="badge badge-pill badge-danger position-absolute noti-mdt">!</span>):(<span></span>);
 		const notification_tudo=noti_tudo?(<span className="badge badge-pill badge-danger position-absolute noti-tudo">!</span>):(<span></span>);
@@ -735,7 +770,7 @@ class Lucky_Rotation extends React.Component {
 					<p className="btn-thamgiangay"><a href="#p2" title="Tham gia ngay"><img src={thamgiangay} alt="Tham gia ngay" width="200" className="img-fluid" /></a></p>
 					<div className="position-absolute-p1">
 						<ul className="nav flex-column menu-left-p1">
-							<li className="pt-6"><a href="http://scoin.vn/nap-tien" title="Nạp Scoin" target="_blank">Nạp Scoin</a></li>
+							<li className="pt-6"><a href="https://scoin.vn/nap-game" title="Nạp Scoin" target="_blank">Nạp Game</a></li>
 							<li className="pt-5b"><a href="#" title="Thể lệ" onClick={this.showModalRules}>Thể lệ</a></li>
 							<li className="pt-5b"><a href="#" title="Phần thưởng" onClick={this.showModalBonus}>Phần thưởng</a></li>
 							<li className="pt-5a"><a href="#bvd" title="Vinh danh">Vinh danh</a></li>
@@ -783,15 +818,15 @@ class Lucky_Rotation extends React.Component {
 			<div className="container jumbotron">
 				<div class="bg-ketquaquayso">
 					<h2 class="d-block text-center text-white text-kqqs display-6 mb-0" style={{fontSize:'2vw'}}>Kết quả quay số</h2>
-					<h4 class="text-center text-white" style={{fontSize:'2vw'}}>Tự động cập nhật theo KQ so Mã dự thưởng vào lúc 16:00 ngày 01/11/2019</h4>
+					<h4 class="text-center text-white" style={{fontSize:'1.5vw'}}>Tự động cập nhật theo KQ so Mã dự thưởng vào lúc 16:00 ngày 01/11/2019</h4>
 					<div class="row px-5">
 						<div class="col-6 align-content-center text-center pl-3">
 							<h2 class="text-center pt-4 color-kqqs" style={{fontSize:'2vw'}}>GIẢI ĐẶC BIỆT <br />iPhone 11 Pro Max</h2>
-							<img src={iphone_11_pro_max} width="70%" class="img-fluid text-center" />
+							<img src={iphone_11_pro_max} width="60%" class="img-fluid text-center" />
 						</div>
 						<div class="col-6 mstt">
 							<h2 class="text-center color-kqqs" style={{fontSize:'2vw'}}>Mã số trúng thưởng<br /> 
-							<label class="form-control form-control form-control-sm bg-secondary" /></h2>
+							<label class="form-control form-control form-control-sm bg-secondary" style={{height:50}} /></h2>
 							
 						</div>
 					</div>
@@ -811,8 +846,8 @@ class Lucky_Rotation extends React.Component {
 						<tr>
 							<td></td>
 							<td>Chưa có</td>
-							<td>iphone 11 Pro Max 256GB</td>
-							<td>Chưa có</td>
+							<td>iPhone 11 Pro Max 256GB</td>
+							<td>Sau livestream KQ</td>
 						</tr>
 						</tbody>
 					</table>
@@ -850,7 +885,7 @@ class Lucky_Rotation extends React.Component {
 						<a className="nav-link btn-dv text-uppercase text-nowrap" href="https://www.facebook.com/scoinvtcmobile/" title="Nhận thông báo sk" target="_blank">Nhận thông báo sk</a>
 						</li>
 						<li className="nav-item">
-						<a className="nav-link btn-dv text-uppercase text-nowrap" href="http://scoin.vn/nap-tien" title="Nạp scoin" target="_blank">Nạp scoin</a>
+						<a className="nav-link btn-dv text-uppercase text-nowrap" href="https://scoin.vn/nap-game" title="Nạp scoin" target="_blank">Nạp Game</a>
 						</li>
 						<li className="nav-item">
 						<a className="nav-link btn-dv text-uppercase text-nowrap" href="tel:19001104" title="Hotline hỗ trợ">HOT LINE: 19001104</a>
@@ -858,15 +893,16 @@ class Lucky_Rotation extends React.Component {
 					</ul>
 				</div>
 			</div>
-			<div className="button-bt">
+			{(isLive)?(<div className="button-bt">
 				<button type="button" className="btn fixed-bottom btn-dv btn-block" onClick={this.showPopupLiveStream}><h5 className="glow mb-0"><img src={spin} width="24" className="pr-1" alt=""/> Xem livestream so Mã dự thưởng tại đây sau: {hour_live}giờ&nbsp;&nbsp;{minute_live}phút&nbsp;&nbsp;{second_live}giây </h5></button>
-			</div>
+			</div>):(<div></div>)}
+			
 
 
 			<div className="container-fluid footer">
 				<p className="text-center"><img src={logo_splay} width="100" alt="" /> <img src={logo_scoin} width="150" hspace="10" alt="" /></p>
 				<p className="text-center"><span className="text-uppercase">CÔNG TY CỔ PHẦN VTC DỊCH VỤ DI ĐỘNG</span> <br />VTC Mobile - Thành viên của Tổng Công ty Truyền thông đa phương tiện Việt Nam VTC <br /> Tầng 11, tòa nhà VTC Online, số 18 Tam Trinh, phường Minh Khai, quận Hai Bà Trưng, Hà Nội.
-<br />Tel: (84-4).39877470 <br />Fax: 84-4).39877210<br /> <a href="mailto:vtcmobile@vtc.vn">vtcmobile@vtc.vn</a>
+<br />Tel: (84-4).39877470 <br />Fax: (84-4).39877210<br /> <a href="mailto:vtcmobile@vtc.vn">vtcmobile@vtc.vn</a>
 	</p>
 			</div>
 
@@ -1119,7 +1155,7 @@ class Lucky_Rotation extends React.Component {
 							<div className="pagination justify-content-center pag-custom">
 								<Pagination
 									activePage={activeTuDo}
-									itemsCountPerPage={numberItemInpage}
+									itemsCountPerPage={limit}
 									totalItemsCount={countTuDo}
 									pageRangeDisplayed={numberPage}
 									lastPageText={'Trang cuối'}
@@ -1179,7 +1215,7 @@ class Lucky_Rotation extends React.Component {
 							<div className="pagination justify-content-center pag-custom">
 								<Pagination
 									activePage={activeCodeBonus}
-									itemsCountPerPage={numberItemInpage}
+									itemsCountPerPage={limit}
 									totalItemsCount={countCodeBonus}
 									pageRangeDisplayed={numberPage}
 									lastPageText={'Trang cuối'}
@@ -1277,8 +1313,8 @@ class Lucky_Rotation extends React.Component {
 					<div className="modal-body">
 						<div className="table-responsive mt-2">              
 							<h5 className="text-thele lead text-center">Bạn đã hết lượt quay!</h5>
-							<p className="text-thele lead text-center">Hãy nạp Scoin để nhận thêm lượt chơi Vòng quay tháng 8.</p>
-							<button type="button" className="btn btn-xacnhan text-white btn-block text-center py-4" onClick={()=>this.openTabNapScoin('http://scoin.vn/nap-tien')}>Nạp Scoin</button>
+							<p className="text-thele lead text-center">Hãy nạp Scoin để nhận thêm lượt chơi Vòng quay tháng 10.</p>
+							<button type="button" className="btn btn-xacnhan text-white btn-block text-center py-4" onClick={()=>this.openTabNapScoin('https://scoin.vn/nap-game')}>Nạp Game</button>
 						</div>       
 					</div>
 
@@ -1408,7 +1444,7 @@ class Lucky_Rotation extends React.Component {
 								</tr>
 								</tbody>
 							</table>              
-							<button type="button" className="btn btn-xacnhan text-white btn-block text-center" onClick={()=>this.openTabNapScoin('http://scoin.vn/nap-tien')}>Nạp</button>
+							<button type="button" className="btn btn-xacnhan text-white btn-block text-center" onClick={()=>this.openTabNapScoin('https://scoin.vn/nap-game')}>Nạp</button>
 						</div>
 						
 					</div>

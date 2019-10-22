@@ -69,10 +69,10 @@ html {scroll-behavior: smooth;}
 .top-12 tr td {vertical-align: middle; font-size: 22px}
 .top100 tr td {vertical-align: middle; font-size: 22px; border: solid 2px #005faf}
 .pag-custom .page-item {margin: 5px;}
-.pag-custom .page-link {background-color: #fcc316; border-color: #fcc316; border-radius: 4px; color:#FFFFFF; font-size:18px; padding: 2px 10px}
+.pag-custom .page-link {background-color: #fff; border-color: #868e94; border-radius: 4px; color:#868e94; font-size:18px; padding: 2px 10px}
 .pag-custom .page-be {background-color: #b30101; border-color: #b30101;}
 .pag-custom .page-item.active .page-link {background-color: #b30101; border-color: #b30101;}
-.btn-dv {background-color: #664cbd !important; border-color: #664cbd !important; border-radius: 4px !important; color:#FFFFFF !important; margin: 2px 1px}
+.btn-dv {background-color: #b30101 !important; border-color: #b30101 !important; border-radius: 4px !important; color:#FFFFFF !important; margin: 2px 1px}
 a.btn-dv:hover {color: #ffd102;}
 .footer {background:url(../images/bg-footer.jpg) center bottom no-repeat; color:#fff; padding: 60px 0; line-height: 20px}
 .popup-phanthuong h4 {text-align: center; margin-top: -30px; width: 180px;}
@@ -93,6 +93,7 @@ a.btn-dv:hover {color: #ffd102;}
 .btn-xacnhan:hover{
 	opacity: 0.8;
 }
+
 .content-chucmung {width: 260px; height: 350px; padding-top: 85px;}
 .text-chucmung {background-color: #fda817; border-radius: 4px; padding: 8px 0;}
 .text-chucmung img {width: 115px}
