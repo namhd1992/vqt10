@@ -247,10 +247,10 @@ class Lucky_Rotation extends React.Component {
 
 	onResize=()=>{
 		if (window.innerWidth <= 320) {
-			this.setState({ width: 242, height: 378, img_width:280, img_height:280});
+			this.setState({ width: 242, height: 280, img_width:280, img_height:280});
 		}
 		if (window.innerWidth > 320 && window.innerWidth <= 480) {
-			this.setState({ width: 260, height: 405, img_width:300, img_height:300});
+			this.setState({ width: 260, height: 300, img_width:300, img_height:300});
 		}
 		if (window.innerWidth > 480 && window.innerWidth <= 600) {
 			this.setState({ width: 400, height: 500, img_width:500, img_height:500});
@@ -372,9 +372,11 @@ class Lucky_Rotation extends React.Component {
 									list.push(data.data.item.name);
 									var pos=1;
 									if(data.data.item.type==="SCOIN"){
-										pos=0;
+										pos=9;
 									}else{
 										var id=_this.props.dataPick.data.id;
+										console.log(id)
+										console.log(itemOfSpin)
 										pos = itemOfSpin.map(function(e) { return e.id; }).indexOf(id);
 									}
 									

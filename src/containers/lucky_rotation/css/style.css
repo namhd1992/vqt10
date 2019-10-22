@@ -154,7 +154,7 @@ a.btn-dv:hover {color: #ffd102;}
 	.content-inner-p1 {background-position: center bottom; height: 1150px; background-size: 150%;}
 	.btn-thamgiangay {position: absolute; bottom: 150px;}
 	.page2 {background-position: 35% 10%; background-size: 160%;}
-	.vqmm {position: absolute; top: 20%; left: 14%; }
+	.vqmm {position: absolute; top: 20%; left: 14%;}
 	.logo-p2 {top: 0; left: 10%; width: 60%;}
 	.content-inner-p2 {background: none}
 	.text-kqqs {padding-top: 80px;}
@@ -220,7 +220,7 @@ a.btn-dv:hover {color: #ffd102;}
 	.btn-logout h5 {width: 80px; margin: 0 auto; display: block}
 	.btn-logout h5 a {line-height: 28px; font-size:14px}	
 	.logo-p2 {top: 0; left: 12%; width: 260px;}
-	.vqmm {position: absolute; top: 15%; left: 10%; width: 320px}
+	.vqmm {position: absolute; top: 15%; left: 17.5%; width: 320px}
 	.page2 {background-position: 35% 10%; background-size: 160%;}
 	.btn-quay {width:140px; bottom: 2%; left: 28%;}
 	.btn-quay .custom-control {font-size: 14px; padding-top: 8px; line-height: 30px}
@@ -240,14 +240,14 @@ a.btn-dv:hover {color: #ffd102;}
 }
 @media (max-width: 380px) {
 	.content-inner-p1 {background-position: center bottom; height: 620px; background-size: 160%;}
-	.vqmm {position: absolute; top: 13%; left: 11%; width: 100%}
+	.vqmm {position: absolute; top: 16%; left: 15%; width: 320px}
 	.page2 {background-position: 35% 10%; background-size: 180%;}
 	.content-inner-p2 {height: 600px;}
 	.logo-p2 {top: 0; left: 10%; width: 250px;}
 }
 @media (max-width: 360px) {
 	.content-inner-p1 {background-position: center bottom; height: 620px; background-size: 160%;}
-	.vqmm {position: absolute; top: 10%; left: 9%; width: 100%}
+	.vqmm {position: absolute; top: 10%; left: 9%; width: 300px}
 	.page2 {background-position: 35% 8%; background-size: 160%;}
 	.content-inner-p2 {height: 600px;}
 	.logo-p2 {top: 0; left: 10%; width: 220px;}
