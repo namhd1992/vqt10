@@ -10,6 +10,7 @@ import {
 	pickCard,
 	buyTurn,
 	getTuDo,
+	getHistoryTuDo,
 	getCodeBonus,
 	getVinhDanh,
 } from '../../modules/lucky'
@@ -46,6 +47,8 @@ import img_tudo from './images/img-tudo.png';
 import img_maduthuong from './images/img-maduthuong.png';
 import img_thongbao from './images/img-thongbao.png';
 import img_livestream from './images/img-livestream.png';
+import img_giaithuong_1 from './images/img-giaithuong-1.png';
+import img_giaithuong_2 from './images/img-giaithuong-2.png';
 // import muiten from './images/muiten.png';
 import ReactResizeDetector from 'react-resize-detector'
 import spin from './images/spin.gif';
@@ -88,7 +91,9 @@ class Lucky_Rotation extends React.Component {
 			activeCodeBonus:1,
 			activeVinhDanh:1,
 			activeTuDo:1,
+			activeHistory:1,
 			countVinhDanh:0,
+			countHistory:0,
 			countTuDo:0,
 			countCodeBonus:0,
 			dataVinhDanh:[],
@@ -96,6 +101,7 @@ class Lucky_Rotation extends React.Component {
 			dataCodeBonus:[],
 			listVinhDanh:[],
 			listTuDo:[],
+			listHistory:[],
 			listCodeBonus:[],
 			width:0,
 			height:0,
@@ -119,6 +125,7 @@ class Lucky_Rotation extends React.Component {
 			second_live:'00',
 			linkLiveStream:'',
 			isLive:false,
+			user:{},
 		};
 	}
 	componentWillMount(){
@@ -168,7 +175,7 @@ class Lucky_Rotation extends React.Component {
 						}
 						this.getStatus(data.data.luckySpin);
 						this.timeShowLive(data.data.luckySpin.endDate);
-						this.setState({userTurnSpin:data.data.userTurnSpin, itemOfSpin:data.data.itemOfSpin, luckySpin:data.data.luckySpin, turnsFree:(data.data.userTurnSpin.turnsFree+data.data.userTurnSpin.turnsBuy), isLogin:true, linkLiveStream:data.data.luckySpin.linkLiveStream})
+						this.setState({userTurnSpin:data.data.userTurnSpin, user:user, itemOfSpin:data.data.itemOfSpin, luckySpin:data.data.luckySpin, turnsFree:(data.data.userTurnSpin.turnsFree+data.data.userTurnSpin.turnsBuy), isLogin:true, linkLiveStream:data.data.luckySpin.linkLiveStream})
 					}else{
 						$('#myModal11').modal('show');
 						this.setState({message_error:'Không lấy được dữ liệu người dùng. Vui lòng tải lại trang.'})
@@ -253,22 +260,22 @@ class Lucky_Rotation extends React.Component {
 
 	onResize=()=>{
 		if (window.innerWidth <= 320) {
-			this.setState({ width: 242, height: 280, img_width:280, img_height:280});
+			this.setState({ width: 210, height: 235, img_width:170, img_height:170});
 		}
 		if (window.innerWidth > 320 && window.innerWidth <= 480) {
-			this.setState({ width: 260, height: 300, img_width:300, img_height:300});
+			this.setState({ width: 250, height: 280, img_width:200, img_height:200});
 		}
 		if (window.innerWidth > 480 && window.innerWidth <= 600) {
-			this.setState({ width: 400, height: 500, img_width:500, img_height:500});
+			this.setState({ width: 335, height: 375, img_width:270, img_height:270});
 		}
 		if (window.innerWidth > 600 && window.innerWidth <= 768) {
-			this.setState({ width: 485, height: 500, img_width:560, img_height:560});
+			this.setState({ width: 470, height: 525, img_width:375, img_height:375});
 		}
 		if (window.innerWidth > 768 && window.innerWidth < 1024) {
-			this.setState({ width: 650, height: 650, img_width:750, img_height:750});
+			this.setState({ width: 504, height: 563, img_width:405, img_height:405});
 		}
 		if (window.innerWidth >= 1024) {
-			this.setState({ width: 645, height: 752, img_width:752, img_height:752});
+			this.setState({ width: 670, height: 752, img_width:540, img_height:540});
 		}
 	}
 
@@ -591,7 +598,7 @@ class Lucky_Rotation extends React.Component {
 	showModalTuDo=()=>{
 		var user = JSON.parse(localStorage.getItem("user"));
 		if (user !== null) {
-			this.getDataTuDo(user,  1);
+			this.getDataTuDo(user);
 			$('#myModal4').modal('hide');
 			$('#myModal2').modal('show');
 		}else {
@@ -599,14 +606,33 @@ class Lucky_Rotation extends React.Component {
 		}
 	}
 
-	getDataTuDo=(user, pageNumber)=>{
-		const {luckySpin, limit}=this.state;
+	getDataTuDo=(user)=>{
+		const {luckySpin, limit, activeTuDo}=this.state;
 		// var offsetTuDo=(pageNumber-1)*limit;
-		this.props.getTuDo(user.access_token, luckySpin.id, limit, (pageNumber-1)).then(()=>{
+		this.props.getTuDo(user.access_token, luckySpin.id, limit, (activeTuDo-1)).then(()=>{
 			var data=this.props.dataTuDo;
 			if(data!==undefined){
 				if(data.status==='01'){
 					this.setState({listTuDo:data.data, countTuDo:data.totalRecords, noti_tudo:false})
+				}else{
+					$('#myModal11').modal('show');
+					this.setState({message_error:'Chưa tải được dữ liệu. Vui lòng thử lại'})
+				}
+			}else{
+				$('#myModal12').modal('show');
+				this.setState({server_err:true})
+			}
+		});
+	}
+
+	getHistory=(user)=>{
+		const {luckySpin, limit, activeHistory}=this.state;
+		// var offsetTuDo=(pageNumber-1)*limit;
+		this.props.getHistoryTuDo(user.access_token, luckySpin.id, limit, (activeHistory-1)).then(()=>{
+			var data=this.props.dataHistoryTuDo;
+			if(data!==undefined){
+				if(data.status==='01'){
+					this.setState({listHistory:data.data, countHistory:data.totalRecords})
 				}else{
 					$('#myModal11').modal('show');
 					this.setState({message_error:'Chưa tải được dữ liệu. Vui lòng thử lại'})
@@ -682,8 +708,13 @@ class Lucky_Rotation extends React.Component {
 		this.setState({activeTuDo: pageNumber},()=>{
 			this.getDataTuDo(user, pageNumber)
 		})
-		// var newPosition=(pageNumber-1)*5
-		// this.setState({activeTuDo: pageNumber, listTuDo: dataTuDo.slice(newPosition, newPosition+5)});
+	}
+
+	handlePageChangeHistory=(pageNumber)=> {
+		var user = JSON.parse(localStorage.getItem("user"));
+		this.setState({activeHistory: pageNumber},()=>{
+			this.getHistory(user, pageNumber)
+		})
 	}
 
 	handlePageChangeCodeBonus=(pageNumber)=> {
@@ -732,7 +763,7 @@ class Lucky_Rotation extends React.Component {
 
 	render() {
 		const {height, width, dialogLoginOpen, dialogBonus, auto, dialogWarning, textWarning, isLogin, userTurnSpin, day, hour, minute, second, code,numberPage, img_status, message_status, data_auto,message_error,linkLiveStream,
-			 activeTuDo, activeCodeBonus, activeVinhDanh, limit, countCodeBonus, countTuDo, countVinhDanh, listCodeBonus, listTuDo, listVinhDanh,itemBonus, turnsFree, noti_mdt, noti_tudo, finished, hour_live, minute_live, second_live, isLive}=this.state;
+			 activeTuDo, activeHistory, activeCodeBonus, activeVinhDanh, limit, countCodeBonus, countTuDo, countHistory, countVinhDanh, listHistory, listCodeBonus, listTuDo, listVinhDanh,itemBonus, turnsFree, noti_mdt, noti_tudo, finished, hour_live, minute_live, second_live, isLive, user}=this.state;
 		const { classes } = this.props;
 		const notification_mdt=noti_mdt?(<span className="badge badge-pill badge-danger position-absolute noti-mdt">!</span>):(<span></span>);
 		const notification_tudo=noti_tudo?(<span className="badge badge-pill badge-danger position-absolute noti-tudo">!</span>):(<span></span>);
@@ -770,7 +801,7 @@ class Lucky_Rotation extends React.Component {
 					<p className="btn-thamgiangay"><a href="#p2" title="Tham gia ngay"><img src={thamgiangay} alt="Tham gia ngay" width="200" className="img-fluid" /></a></p>
 					<div className="position-absolute-p1">
 						<ul className="nav flex-column menu-left-p1">
-							<li className="pt-6"><a href="https://scoin.vn/nap-game" title="Nạp Scoin" target="_blank">Nạp Game</a></li>
+							<li className="pt-6"><a href="https://scoin.vn/nap-tien" title="Nạp Scoin" target="_blank">Nạp Game</a></li>
 							<li className="pt-5b"><a href="#" title="Thể lệ" onClick={this.showModalRules}>Thể lệ</a></li>
 							<li className="pt-5b"><a href="#" title="Phần thưởng" onClick={this.showModalBonus}>Phần thưởng</a></li>
 							<li className="pt-5a"><a href="#bvd" title="Vinh danh">Vinh danh</a></li>
@@ -816,9 +847,9 @@ class Lucky_Rotation extends React.Component {
 			{/* End p2 */}
 
 			<div className="container jumbotron">
-				<div class="bg-ketquaquayso">
-					<h2 class="d-block text-center text-white text-kqqs display-6 mb-0" style={{fontSize:'2vw'}}>Kết quả quay số</h2>
-					<h4 class="text-center text-white" style={{fontSize:'1.5vw'}}>Tự động cập nhật theo KQ so Mã dự thưởng vào lúc 16:00 ngày 01/11/2019</h4>
+				{/* <div class="bg-ketquaquayso">
+					<h2 class="d-block text-center text-white text-kqqs display-6 mb-0" style={{fontSize:'2vw'}}>KQ Mã dự thưởng</h2>
+					<h4 class="text-center text-white" style={{fontSize:'1.5vw'}}>Tự động cập nhật sau 19:00 ngày 01/11/2019</h4>
 					<div class="row px-5">
 						<div class="col-6 align-content-center text-center pl-3">
 							<h2 class="text-center pt-4 color-kqqs" style={{fontSize:'2vw'}}>GIẢI ĐẶC BIỆT <br />iPhone 11 Pro Max</h2>
@@ -827,6 +858,20 @@ class Lucky_Rotation extends React.Component {
 						<div class="col-6 mstt">
 							<h2 class="text-center color-kqqs" style={{fontSize:'2vw'}}>Mã số trúng thưởng<br /> 
 							<label class="form-control form-control form-control-sm bg-secondary" style={{height:50}} /></h2>
+							
+						</div>
+					</div>
+				</div> */}
+				<div class="bg-ketquaquayso">
+					<h2 class="d-block text-center text-kqqs mb-0 bg-title-mdt">KQ Mã dự thưởng</h2>
+					<h4 class="text-center text-white">Tự động cập nhật sau 19:00 ngày 01/11/2019</h4>
+					<div class="row px-5">
+						<div class="col-md-6 align-content-center text-center pl-3">
+							<h2 class="text-center pt-4 color-kqqs title-giaidacbiet">GIẢI ĐẶC BIỆT <br />iPhone 11 Pro Max</h2>
+							<img src={iphone_11_pro_max} width="70%" class="img-fluid text-center bg-img-giaithuong" />
+						</div>
+						<div class="col-md-6 mstt">
+							<h2 class="text-center color-kqqs title-giaidacbiet">Mã số trúng thưởng<br /> <span class="badge badge-secondary p-3" style={{width: 120, height: 40}}>----</span></h2>
 							
 						</div>
 					</div>
@@ -885,7 +930,7 @@ class Lucky_Rotation extends React.Component {
 						<a className="nav-link btn-dv text-uppercase text-nowrap" href="https://www.facebook.com/scoinvtcmobile/" title="Nhận thông báo sk" target="_blank">Nhận thông báo sk</a>
 						</li>
 						<li className="nav-item">
-						<a className="nav-link btn-dv text-uppercase text-nowrap" href="https://scoin.vn/nap-game" title="Nạp scoin" target="_blank">Nạp Game</a>
+						<a className="nav-link btn-dv text-uppercase text-nowrap" href="https://scoin.vn/nap-tien" title="Nạp scoin" target="_blank">Nạp Game</a>
 						</li>
 						<li className="nav-item">
 						<a className="nav-link btn-dv text-uppercase text-nowrap" href="tel:19001104" title="Hotline hỗ trợ">HOT LINE: 19001104</a>
@@ -918,67 +963,10 @@ class Lucky_Rotation extends React.Component {
 					</div>
 
 					{/* <!-- Modal body --> */}
-					<div className="modal-body">
-						<div className="card-deck">
-						<div className="card">
-							<div className="card-body text-center" style={{padding:"0rem"}}>
-							<h3 className="card-title text-uppercase title-giaidacbiet">Giải đặc biệt</h3>
-							<p className="card-text title-giaidacbiet">Xe máy Honda Airblade 2019</p>
-							<div className="bg-giaithuong d-table-cell align-middle justify-content-center w-100">
-								<img src={honda} alt="Xe máy" className="img-fluid" />
-							</div>
-							<h5 className="card-title">TRỊ GIÁ: 42.000.000 <br /> Số lượng giải: 01</h5>
-							</div>
-						</div>
-						<div className="card">
-							<div className="card-body text-center" style={{padding:"0rem"}}>
-							<h3 className="card-title text-uppercase title-giaidacbiet">Giải nhất</h3>
-							<p className="card-text title-giaidacbiet">Xiaomi Black Shark 2</p>
-							<div className="bg-giaithuong d-table-cell align-middle">
-								{/* <img src={xiaomi_black} alt="Iphone" className="img-fluid" /> */}
-							</div>
-							<h5 className="card-title">TRỊ GIÁ: 10.000.000 <br /> Số lượng giải: 01</h5>
-							</div>
-						</div>      
-						</div>
-						<h3 className="card-title text-uppercase title-giaidacbiet text-center">Các giải khác</h3>
-						<div className="card-deck">
-						<div className="card">
-							<div className="card-body text-center item-giaikhac" style={{padding:"0rem"}}>              
-							<div className="bg-giaithuong d-table-cell align-middle h-auto py-4">
-								<img src={img_card10k} alt="Thẻ 10k" className="img-fluid mt-2" />
-								<p className="text-giaikhac">Tặng thẻ 10.000đ vào Tủ đồ SK <br />Số lượng giải: 1000</p>
-							</div>              
-							</div>
-						</div>          
-						<div className="card">
-							<div className="card-body text-center item-giaikhac" style={{padding:"0rem"}}>              
-							<div className="bg-giaithuong d-table-cell align-middle h-auto py-4">
-								<img src={img_card50k} alt="Thẻ 50k" className="img-fluid mt-2" />
-								<p className="text-giaikhac">Tặng thẻ 50.000đ vào Tủ đồ SK <br />Số lượng giải: 200</p>
-							</div>             
-							</div>
-						</div>
-						<div className="card">
-							<div className="card-body text-center item-giaikhac" style={{padding:"0rem"}}>              
-							<div className="bg-giaithuong d-table-cell align-middle h-auto py-4">
-								<img src={img_card100k} alt="Thẻ 100k" className="img-fluid mt-2" />
-								<p className="text-giaikhac">Tặng thẻ 100.000đ vào Tủ đồ SK <br />Số lượng giải: 60</p>
-							</div>              
-							</div>
-						</div>
-						<div className="card">
-							<div className="card-body text-center item-giaikhac" style={{padding:"0rem"}}>              
-							<div className="bg-giaithuong d-table-cell align-middle h-auto py-4">
-								<img src={img_card500k} alt="Thẻ 500k" className="img-fluid mt-2" />
-								<p className="text-giaikhac">Tặng thẻ 500.000đ vào Tủ đồ SK <br />Số lượng giải: 30</p>
-							</div>              
-							</div>
-						</div>     
-						</div>
-						
+					<div class="modal-body w-100">
+						<img src={img_giaithuong_1} class="w-100" />
+						<img src={img_giaithuong_2} class="w-100" />
 					</div>
-
 					</div>
 				</div>
 			</div>
@@ -996,11 +984,10 @@ class Lucky_Rotation extends React.Component {
 
 					{/* <!-- Modal body --> */}
 					<div className="modal-body">
-						<h3 className="text-purple">I. Đối tượng tham gia</h3>
+						<h3 className="text-red">I. Đối tượng tham gia</h3>
 						<p className="text-thele">Khách hàng có tài khoản Scoin. Nếu chưa có, đăng ký <code><a href="https://scoin.vn/thong-tin-ca-nhan" title="Đăng ký" target="_blank">tại đây</a></code>. <br />
-				Xác minh tài khoản Scoin tại đây nếu chưa thực hiện. <br />
-				Nạp thẻ Scoin bất kỳ mệnh giá trong thời gian từ  00:01 19/08 - 23:59 25/08/2019.</p>
-						<h3 className="text-purple">II. Cách thức tham gia sự kiện</h3>
+						Nạp game dùng thẻ Scoin mệnh giá tối thiểu 50k trong thời gian từ 00:01 ngày 1 - 23:59 ngày 7</p>
+						<h3 className="text-red">II. Cách thức tham gia sự kiện</h3>
 						<div style={{display:'flex'}}>
 							{/* <div className="bg-orange px-0 py-2 text-center" style={{borderRadius: 4, flex:1}}>Đăng nhập Scoin <br />+<br /> Xác thực số điện thoại</div>
 							<div className="align-self-center" style={{flexGrowgrow: 0, padding: 0}}><span>></span></div>
@@ -1013,105 +1000,87 @@ class Lucky_Rotation extends React.Component {
           					<div className="col-4 bg-orange py-2 text-center border border-white rounded-lg"><button type="button" className="btn btn-info d-block mx-auto mb-3">Bước 2</button><p className="text-dark">Chơi vòng quay </p> <p className="font-weight-bold text-success my-1">&nabla;</p> <p className="text-dark">Nhận mã dự thưởng</p></div>          
           					<div className="col-4 bg-orange py-2 text-center border border-white rounded-lg"><button type="button" className="btn btn-success d-block mx-auto mb-3">Bước 3</button><p className="text-dark">So mã dự thưởng với KQ XSMB <br /> 18:30 ngày 26/08/2019</p></div>  
 						</div>
-						<p className="text-thele pt-3">Bước 1: Đăng nhập tài khoản Scoin <code><a href="https://scoin.vn/thong-tin-ca-nhan" title="Đăng ký" target="_blank">tại đây</a></code> và thực hiện nạp tiền qua kênh thẻ cào Scoin. <br />
-				Bước 2: Nhận lượt quay miễn phí, tương ứng với thẻ Scoin nạp thành công:</p>
+						<p className="text-thele pt-3">Bước 1:  Nạp game bất kỳ, chọn kênh thẻ cào Scoin mệnh giá tối thiểu 50k. <br />
+						Bước 2: Nhận lượt quay miễn phí, tương ứng với thẻ Scoin nạp thành công:</p>
 						<div className="table-responsive">
 							<table className="table table-bordered text-center text-thele">
 								<thead>
-								<tr>
-									<th>STT</th>
-									<th>Mệnh giá thẻ Scoin (VNĐ)</th>
-									<th>Số lượt quay</th>
-								</tr>
-								</thead>
-								<tbody>
-								<tr>
-									<td>1</td>
-									<td>10.000</td>
-									<td>1</td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td>20.000</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>3</td>
-									<td>50.000</td>
-									<td>5</td>
-								</tr>
-								<tr>
-									<td>4</td>
-									<td>100.000</td>
-									<td>11</td>
-								</tr>
-								<tr>
-									<td>5</td>
-									<td>200.000</td>
-									<td>22</td>
-								</tr>
-								<tr>
-									<td>6</td>
-									<td>300.000</td>
-									<td>33</td>
-								</tr>
-								<tr>
-									<td>7</td>
-									<td>500.000</td>
-									<td>55</td>
-								</tr>
-								<tr>
-									<td>8</td>
-									<td>1.000.000</td>
-									<td>120</td>
-								</tr>
-								<tr>
-									<td>9</td>
-									<td>2.000.000</td>
-									<td>240</td>
-								</tr>
-								<tr>
-									<td>10</td>
-									<td>5.000.000</td>
-									<td>600</td>
-								</tr>
+									<tr>
+										<th colspan="4">Nạp thẻ Scoin vào game</th>                    
+									</tr>
+									<tr>
+										<th>STT</th>
+										<th>Mệnh giá thẻ Scoin (VNĐ)</th>
+										<th>Số lượt quay chuẩn</th>
+										<th>Số lượt quay (đã cộng)</th>
+									</tr>
+									</thead>
+									<tbody>
+									<tr>
+										<td>1</td>
+										<td>50.000</td>
+										<td>1</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>2</td>
+										<td>100.000</td>
+										<td>2</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>3</td>
+										<td>200.000</td>
+										<td>4</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>4</td>
+										<td>300.000</td>
+										<td>6</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>5</td>
+										<td>500.000</td>
+										<td>10</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>6</td>
+										<td>1.000.000</td>
+										<td>22</td>
+										<td>10%</td>
+									</tr>
+									<tr>
+										<td>7</td>
+										<td>2.000.000</td>
+										<td>44</td>
+										<td>10%</td>
+									</tr>
+									<tr>
+										<td>8</td>
+										<td>5.000.000</td>
+										<td>120</td>
+										<td>20%</td>
+									</tr>
 								</tbody>
 							</table>
 						</div>
-						<p className="text-thele">Bước 3: Tham gia vòng quay để nhận Mã dự thưởng & thẻ Scoin. <br />
-				Bước 4: Mã dự thưởng dùng để đối chiếu với KQ XSMB ngày 26/08/19 để xác định trúng thưởng:</p>
-						<div className="table-responsive">
-							<table className="table table-bordered w-100 text-center text-thele">
-								<thead>
-								<tr>
-									<th>Giải đặc biệt</th>
-									<th>Xe máy Honda Airblade 2019</th>
-								</tr>
-								<tr>
-									<th>Giải nhất</th>
-									<th>Xiaomi Black Shark 2</th>
-								</tr>
-								</thead>
-							</table>
-						</div>
-						<h3 className="text-purple">III. Cách thức nhận giải thưởng</h3>
-						<p className="text-thele">Đối với phần thưởng là thẻ Scoin: sẽ được lưu trữ trong Tủ đồ sự kiện. Khách hàng có thể
-				xem và sử dụng trực tiếp để nạp điện thoại hoặc nạp vào các game của VTC Mobile.
-				Đối với phần thưởng là Mã dự thưởng: Sau khi kết quả XSMB ngày 26/08/2019 được
-				công bố, BTC sẽ cập nhật thông tin của khách hàng trúng thưởng trong Bảng vinh danh.
-				Khách hàng trúng giải liên hệ Hotline <a style={{textDecoration:'underline'}} href="tel:19001104" title="Hotline hỗ trợ">19001104</a> để được hướng dẫn lên nhận thưởng
-				trực tiếp tại trụ sở Công ty cổ phần VTC Dịch vụ di động - tầng 11, tòa nhà VTC Online,
-				số 18 Tam Trinh, Hai Bà Trưng, Hà Nội.</p>
-						<p className="text-thele"><code>Lưu ý:</code> Khi đến nhận giải thưởng, khách hàng cần đem theo giấy tờ tùy thân (CMND/ CCCD/ Hộ chiếu còn hiệu lực.</p>
-						<p className="text-thele">Theo khoản 6, điều 3, chương 1 của Luật thuế thu nhập cá nhân, những người may mắn
-				trúng giải thưởng hiện vật có giá trị kinh tế cao có nghĩa vụ nộp thuế theo quy định của
-				Nhà nước. Thông tin chi tiết xem <code><a href="https://www.mof.gov.vn/webcenter/portal/mttpltc/r/m/pchtrphlu/pchtrthtu/pchtrthtu_chitiet;jsessionid=ThZz4VGQnL0QgNbLB0nacaTsM1vAIiOZGx9z8hGOoXitxa62VKmY!304837975!1847050008?centerWidth=100%25&dDocName=BTC260955&dID=31536&leftWidth=0%25&rightWidth=0%25&showFooter=false&showHeader=false&_adf.ctrl-state=1a8d3rpn02_4&_afrLoop=75399789223796617#!%40%40%3F_afrLoop%3D75399789223796617%26centerWidth%3D100%2525%26dDocName%3DBTC260955%26dID%3D31536%26leftWidth%3D0%2525%26rightWidth%3D0%2525%26showFooter%3Dfalse%26showHeader%3Dfalse%26_adf.ctrl-state%3D6d4nwzwwd_4" title="Luật thuế" target="_blank">tại đây</a></code>.</p>
-						<h3 className="text-purple">IV. Thời gian trao thưởng</h3>
-						<p className="text-thele">Công ty cổ phần VTC Dịch vụ di động sẽ trao giải thưởng cho khách hàng chậm nhất
-				sau 15 ngày làm việc kể từ khi kết thúc sự kiện.</p>
-						<p className="text-thele"><code>Lưu ý:</code> Trong tất cả các trường hợp, quyết định của Công ty cổ phần VTC Dịch vụ di động
-				là quyết định cuối cùng. Mọi trường hợp gian lận hoặc không trung thực sẽ bị xử lý
-				theo pháp luật.</p>
+						
+						<h3 className="text-red">III. Các giải thưởng</h3>
+						<p className="text-thele">-Scoin sẽ được cộng trực tiếp vào ví Scoin của khách hàng.<br></br>
+						- Thẻ Scoin: sẽ được lưu trữ trong Tủ đồ sự kiện. Khách hàng có thể xem và sử dụng trực tiếp để nạp điện thoại hoặc nạp vào các game của VTC Mobile.<br></br>
+						- Mã dự thưởng: lưu trữ trong mục Mã dự thưởng. Khách hàng có thể tra cứu dễ dàng.<br></br>
+						- Giải đặc biệt - iPhone 11 Pro Max: Sau khi KQ Mã dự thưởng ngày 8 sự kiện được công bố, BTC sẽ cập nhật thông tin của khách hàng trúng thưởng trong Bảng vinh danh. Khách hàng trúng giải liên hệ Hotline 1900 1104 để được hướng dẫn nhận thưởng.
+						</p>
+						<h3 className="text-red">IV. Thời gian trao thưởng</h3>
+						<p className="text-thele">Công ty cổ phần VTC Dịch vụ di động sẽ trao giải thưởng cho khách hàng chậm nhất sau 15 ngày làm việc kể từ khi kết thúc sự kiện.</p>
+         <p className="text-thele"><code>Lưu ý:</code> - Khi đến nhận giải thưởng, khách hàng cần đem theo giấy tờ tùy thân (CMND/ CCCD/ Hộ chiếu còn hiệu lực. Theo khoản 6, điều 3, chương 1 của Luật thuế thu nhập cá nhân, những người may mắn trúng giải thưởng hiện vật có giá trị kinh tế cao có nghĩa vụ nộp thuế theo quy định của Nhà nước. Thông tin chi tiết xem <code><a href="https://www.mof.gov.vn/webcenter/portal/mttpltc/r/m/pchtrphlu/pchtrthtu/pchtrthtu_chitiet?dDocName=BTC260955&dID=31536&_afrLoop=73261410332298795#!%40%40%3F_afrLoop%3D73261410332298795%26centerWidth%3D100%2525%26dDocName%3DBTC260955%26dID%3D31536%26leftWidth%3D0%2525%26rightWidth%3D0%2525%26showFooter%3Dfalse%26showHeader%3Dfalse%26_adf.ctrl-state%3D1a8d3rpn02_4" title="tại đây" target="_blank">tại đây</a></code>.<br></br>
+- Trong tất cả các trường hợp, quyết định của Công ty cổ phần VTC Dịch vụ di động là quyết định cuối cùng. Mọi trường hợp gian lận hoặc không trung thực sẽ bị xử lý theo pháp luật.
+
+
+</p>
 						
 					</div>
 
@@ -1133,38 +1102,86 @@ class Lucky_Rotation extends React.Component {
 
 					{/* <!-- Modal body --> */}
 					<div className="modal-body">
-						<div className="table-responsive mt-2">
-							<table className="table table-bordered mx-auto text-center" style={{color:"#282652", width:"99%"}}> 
-								<thead>
-								<tr className="text-uppercase lead">
-									<th className="border-bottom-0 border-left-0 border-right-0 border-top-0">Phần thưởng</th>
-									<th className="border-bottom-0 border-left-0 border-right-0 border-top-0">Nội dung</th>
-									<th className="border-bottom-0 border-left-0 border-right-0 border-top-0">Thời gian trúng</th>
-								</tr>
-								</thead>            
-								<tbody className="popup-tudo">
-									{listTuDo.map((obj, key) => (
-										<tr key={key}>
-											<td className="border-right-0">{obj.itemName}</td>
-											<td className="border-left-0 border-right-0">{obj.description}</td>
-											<td className="border-left-0">{obj.date}</td>
+						<ul class="nav nav-pills nav-justified w-50 mx-auto">
+							<li class="nav-item">
+								<a class="nav-link active text-red" data-toggle="pill" href="#phanthuong" onClick={()=>this.getDataTuDo(user)}>Phần thưởng</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link text-red" data-toggle="pill" href="#lichsu" onClick={()=>this.getHistory(user)}>Lịch sử</a>
+							</li>
+						</ul>
+						<div class="tab-content">        
+							<div class="tab-pane container active" id="phanthuong">
+								<div class="table-responsive mt-2">
+									<table class="table table-bordered mx-auto text-center" style={{color:"#282652", width:"99%"}}> 
+										<thead>
+										<tr class="text-uppercase lead">
+											<th class="border-bottom-0 border-left-0 border-right-0 border-top-0">Phần thưởng</th>
+											<th class="border-bottom-0 border-left-0 border-right-0 border-top-0">Nội dung</th>
+											<th class="border-bottom-0 border-left-0 border-right-0 border-top-0">Thời gian trúng</th>
 										</tr>
-									))}
-								</tbody>
-							</table>
-							<div className="pagination justify-content-center pag-custom">
-								<Pagination
-									activePage={activeTuDo}
-									itemsCountPerPage={limit}
-									totalItemsCount={countTuDo}
-									pageRangeDisplayed={numberPage}
-									lastPageText={'Trang cuối'}
-									firstPageText={'Trang đầu'}
-									itemClass={"page-item"}
-									linkClass={"page-link"}
-									onChange={(v) => this.handlePageChangeTuDo(v)}
-								/>
-							</div> 
+										</thead>            
+										<tbody class="popup-tudo">
+											{listTuDo.map((obj, key) => (
+												<tr key={key}>
+													<td className="border-right-0">{obj.itemName}</td>
+													<td className="border-left-0 border-right-0">{obj.description}</td>
+													<td className="border-left-0">{obj.date}</td>
+												</tr>
+											))}
+										</tbody>
+									</table>
+									<div className="pagination justify-content-center pag-custom">
+										<Pagination
+											activePage={activeTuDo}
+											itemsCountPerPage={limit}
+											totalItemsCount={countTuDo}
+											pageRangeDisplayed={numberPage}
+											lastPageText={'Trang cuối'}
+											firstPageText={'Trang đầu'}
+											itemClass={"page-item"}
+											linkClass={"page-link"}
+											onChange={(v) => this.handlePageChangeTuDo(v)}
+										/>
+									</div> 
+								</div>
+							</div>
+							<div class="tab-pane container fade" id="lichsu">
+								<div class="table-responsive mt-2">
+									<table class="table table-bordered mx-auto text-center" style={{color:"#282652", width:"99%"}}> 
+										<thead>
+										<tr class="text-uppercase lead">
+											<th class="border-bottom-0 border-left-0 border-right-0 border-top-0">STT</th>
+											<th class="border-bottom-0 border-left-0 border-right-0 border-top-0">Kết Quả</th>
+											<th class="border-bottom-0 border-left-0 border-right-0 border-top-0">Thời Gian</th>
+										</tr>
+										</thead>            
+										<tbody class="popup-tudo">
+											{listHistory.map((obj, key) => (
+												<tr key={key}>
+													<td className="border-right-0">{obj.stt}</td>
+													<td className="border-left-0 border-right-0">{obj.item_name}</td>
+													<td className="border-left-0">{obj.date}</td>
+												</tr>
+											))}
+										</tbody>
+									</table>
+									<div className="pagination justify-content-center pag-custom">
+										<Pagination
+											activePage={activeHistory}
+											itemsCountPerPage={limit}
+											totalItemsCount={countHistory}
+											pageRangeDisplayed={numberPage}
+											lastPageText={'Trang cuối'}
+											firstPageText={'Trang đầu'}
+											itemClass={"page-item"}
+											linkClass={"page-link"}
+											onChange={(v) => this.handlePageChangeHistory(v)}
+										/>
+									</div> 
+								</div>
+							</div>
+							
 						</div>
 						
 					</div>
@@ -1314,7 +1331,7 @@ class Lucky_Rotation extends React.Component {
 						<div className="table-responsive mt-2">              
 							<h5 className="text-thele lead text-center">Bạn đã hết lượt quay!</h5>
 							<p className="text-thele lead text-center">Hãy nạp Scoin để nhận thêm lượt chơi Vòng quay tháng 10.</p>
-							<button type="button" className="btn btn-xacnhan text-white btn-block text-center py-4" onClick={()=>this.openTabNapScoin('https://scoin.vn/nap-game')}>Nạp Game</button>
+							<button type="button" className="btn btn-xacnhan text-white btn-block text-center py-4" onClick={()=>this.openTabNapScoin('https://scoin.vn/nap-tien')}>Nạp Game</button>
 						</div>       
 					</div>
 
@@ -1382,69 +1399,74 @@ class Lucky_Rotation extends React.Component {
 					</div>
 					<div className="modal-body">
 						<div className="table-responsive mt-2">
-							<h3 className="text-purple text-center">Thêm lượt? <br />Nạp Ví hoặc Nạp Game dùng thẻ Scoin</h3>
+							<h5 class="text-center">Bạn sẽ nhận được lượt chơi miễn phí khi nạp thẻ Scoin vào game của VTC Mobile.</h5>
 							<table className="table table-striped mx-auto text-center" style={{color:"#282652", width:"99%"}}> 
 								<thead>
-								<tr className="text-uppercase">
-									<th className="border-bottom-0 border-left-0 border-right-0 border-top-0">STT</th>
-									<th className="border-bottom-0 border-left-0 border-right-0 border-top-0">Mệnh giá thẻ Scoin (VNĐ)</th>
-									<th className="border-bottom-0 border-left-0 border-right-0 border-top-0">Số lượt quay</th>
-								</tr>
-								</thead>            
-								<tbody className="popup-tudo">
-								<tr>
-									<td>1</td>
-									<td >10.000</td>
-									<td>1</td>
-								</tr>
-								<tr>
-									<td>2</td>
-									<td>20.000</td>
-									<td>2</td>
-								</tr>
-								<tr>
-									<td>3</td>
-									<td>50.000</td>
-									<td>5</td>
-								</tr>
-								<tr>
-									<td>4</td>
-									<td >100.000</td>
-									<td>11</td>
-								</tr>
-								<tr>
-									<td>5</td>
-									<td>200.000</td>
-									<td>22</td>
-								</tr>
-								<tr>
-									<td>6</td>
-									<td>300.000</td>
-									<td>33</td>
-								</tr>
-								<tr>
-									<td>7</td>
-									<td >500.000</td>
-									<td>55</td>
-								</tr>
-								<tr>
-									<td>8</td>
-									<td>1.000.000</td>
-									<td>120</td>
-								</tr>
-								<tr>
-									<td>9</td>
-									<td>2.000.000</td>
-									<td>240</td>
-								</tr>
-								<tr>
-									<td>10</td>
-									<td>5.000.000</td>
-									<td>600</td>
-								</tr>
+									<tr>
+										<th colspan="4">Nạp thẻ Scoin vào game</th>                    
+									</tr>
+									<tr>
+										<th>STT</th>
+										<th>Mệnh giá thẻ Scoin (VNĐ)</th>
+										<th>Số lượt quay chuẩn</th>
+										<th>Số lượt quay (đã cộng)</th>
+									</tr>
+									</thead>
+									<tbody>
+									<tr>
+										<td>1</td>
+										<td>50.000</td>
+										<td>1</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>2</td>
+										<td>100.000</td>
+										<td>2</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>3</td>
+										<td>200.000</td>
+										<td>4</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>4</td>
+										<td>300.000</td>
+										<td>6</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>5</td>
+										<td>500.000</td>
+										<td>10</td>
+										<td></td>
+									</tr>
+									<tr>
+										<td>6</td>
+										<td>1.000.000</td>
+										<td>22</td>
+										<td>10%</td>
+									</tr>
+									<tr>
+										<td>7</td>
+										<td>2.000.000</td>
+										<td>44</td>
+										<td>10%</td>
+									</tr>
+									<tr>
+										<td>8</td>
+										<td>5.000.000</td>
+										<td>120</td>
+										<td>20%</td>
+									</tr>
 								</tbody>
-							</table>              
-							<button type="button" className="btn btn-xacnhan text-white btn-block text-center" onClick={()=>this.openTabNapScoin('https://scoin.vn/nap-game')}>Nạp</button>
+							</table> 
+							<div class="btn-logout position-relative w-25 mx-auto text-center left-0 top-0">
+								<h5 class="text-center" onClick={()=>this.openTabNapScoin('https://scoin.vn/nap-tien')}><a>Nạp</a></h5>
+							</div>             
+							{/* <button type="button" className="btn btn-xacnhan text-white btn-block text-center" onClick={()=>this.openTabNapScoin('https://scoin.vn/nap-game')}>Nạp</button> */}
 						</div>
 						
 					</div>
@@ -1554,6 +1576,7 @@ const mapStateToProps = state => ({
 	dataDetail: state.lucky.dataDetail,
 	dataTurn: state.lucky.dataTurn,
 	dataTuDo: state.lucky.dataTuDo,
+	dataHistoryTuDo: state.lucky.dataHistoryTuDo,
 	dataVinhDanh: state.lucky.dataVinhDanh,
 	dataCodeBonus: state.lucky.dataCodeBonus,
 	server:state.server.serverError,
@@ -1566,6 +1589,7 @@ const mapDispatchToProps = dispatch => bindActionCreators({
 	getRotationDetailDataUser,
 	pickCard,
 	buyTurn,
+	getHistoryTuDo,
 	getData,
 	getTuDo,
 	getCodeBonus,

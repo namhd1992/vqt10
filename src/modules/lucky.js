@@ -11,6 +11,7 @@ export const LUCKY_PICK_RESPONSE = 'lucky/LUCKY_PICK_RESPONSE'
 export const LUCKY_TURN_RESPONSE = 'lucky/LUCKY_TURN_RESPONSE'
 export const LUCKY_HISTORY_RESPONSE='lucky/LUCKY_HISTORY_RESPONSE'
 export const LUCKY_TU_DO='lucky/LUCKY_TU_DO';
+export const LUCKY_HISTORY_TU_DO='lucky/LUCKY_HISTORY_TU_DO';
 export const LUCKY_VINH_DANH='lucky/LUCKY_VINH_DANH';
 export const LUCKY_CODE_BONUS='lucky/LUCKY_CODE_BONUS';
 
@@ -80,6 +81,12 @@ export default (state = initialState, action) => {
 			return {
 				...state,
 				dataTuDo: action.data,
+				waiting: false
+			}
+		case LUCKY_HISTORY_TU_DO:
+			return {
+				...state,
+				dataHistoryTuDo: action.data,
 				waiting: false
 			}
 		case LUCKY_VINH_DANH:
@@ -333,6 +340,33 @@ export const getTuDo = (token, id, limit, offset) => {
 	}
 }
 
+
+export const getHistoryTuDo = (token, id, limit, offset) => {
+	var header = {
+		headers: {
+			"Content-Type": "application/json",
+			"Authorization": "bearer " + token,
+		}
+	}
+	return dispatch => {
+		dispatch({
+			type: LUCKY_REQUEST
+		})
+		var url = Ultilities.base_url() + "lucky-spin-history/turn?lucky_spin_id=" + id + "&limit=" + limit + "&offset=" + offset;
+		return axios.get(url, header).then(function (response) {
+			dispatch({
+				type: LUCKY_HISTORY_TU_DO,
+				data: response.data
+			})
+		}).catch(function (error) {
+			dispatch({
+				type: SERVER_ERROR
+			})
+		})
+	}
+}
+
+
 export const getVinhDanh = (id, limit, offset) => {
 	var header = {
 		headers: {
@@ -369,7 +403,7 @@ export const getCodeBonus = (token, id, type) => {
 		dispatch({
 			type: LUCKY_REQUEST
 		})
-		var url = Ultilities.base_url() + "lucky-spin-history?lucky_spin_id=" + id + '&type_gift='+type;
+		var url = Ultilities.base_url() + "lucky-spin-history?lucky_spin_id=" + id + '&type_gift='+type ;
 		return axios.get(url, header).then(function (response) {
 			dispatch({
 				type: LUCKY_CODE_BONUS,
