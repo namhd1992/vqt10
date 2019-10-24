@@ -18,7 +18,7 @@ html {scroll-behavior: smooth;}
 .cell-timer-p1 {background:url(../images/bg-time.png) 4px center no-repeat; width: 64px; height:64px; vertical-align:middle !important; line-height:0 !important; padding-left: 2px;}
 .display-5 {font-size: 2.6rem;}
 .display-6 {font-size: 2.6rem;}
-.btn-thamgiangay {position: absolute; bottom: 20px; display: block; left: 50%; transform: translate(-50%, 0);}
+.btn-thamgiangay {position: absolute; bottom: 20px; display: block; left: 50%; transform: translate(-50%, 0); padding-bottom: 140px;}
 .position-absolute-p1 {position:fixed; left:0; top: 15%; background:url(../images/bg-btn-float-right.png) no-repeat; width: 84px; height: 420px; z-index: 9999}
 .menu-left-p1 li {width: 60px; margin: 0 auto; display: block; text-align: center}
 .menu-left-p1 li a {color:#FFFFFF; font-size: 20px; line-height:0; padding-top:20px;}
@@ -123,6 +123,8 @@ a.btn-dv:hover {color: #ffd102;}
   -moz-animation: glow 1s ease-in-out infinite alternate;
   animation: glow 1s ease-in-out infinite alternate;
 }
+.giaithuong-mobile {display: none;}
+.giaithuong-pc {display: block;}
 
 @-webkit-keyframes glow {
   from {
@@ -158,7 +160,7 @@ a.btn-dv:hover {color: #ffd102;}
 @media (max-width: 1024px) {
 	.btn-quay {bottom: 13%; right: 3%;}
 	.content-inner-p1 {background-position: center bottom; height: 1150px; background-size: 150%;}
-	.btn-thamgiangay {position: absolute; bottom: 150px;}
+	.btn-thamgiangay {position: absolute; bottom: 150px; padding-bottom: 0px;}
 	.page2 {background-position: 35% 10%; background-size: 160%;}
 	.vqmm {position: absolute; top: 20%; left: 14%;}
 	.logo-p2 {top: 0; left: 10%; width: 60%;}
@@ -231,6 +233,8 @@ a.btn-dv:hover {color: #ffd102;}
 	.vqmm {position: absolute; top: 15%; left: 19%; width: 400px}
 	/* .bg-ketquaquayso {height: 480px;} */
 	.text-kqqs {padding-top: 0px;}
+	.giaithuong-mobile {display: block;}
+	.giaithuong-pc {display: none;}
 }
 @media (max-width: 480px) {
 	.content-inner-p1 {background-position: center bottom; height: 660px; background-size: 150%;}

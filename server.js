@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
-// const port = process.env.PORT || 3004;
-const port = process.env.PORT || 3003;
+const port = process.env.PORT || 3004;
+// const port = process.env.PORT || 3003;
 const path = require('path');
 const fs = require('fs')
 
@@ -20,9 +20,9 @@ app.get('/', function(request, response) {
     }
     data = data.replace(/\$OG_URL/g, 'https://vongquayt8.splay.vn/');
     data = data.replace(/\$OG_TYPE/g, "Game");
-    data = data.replace(/\$OG_TITLE/g, 'Vòng quay Tháng 8 - Rinh xe Honda Airblade cùng Scoin');
-    data = data.replace(/\$OG_DESCRIPTION/g, "Sk diễn ra từ 19/08/2019 đến 25/08/2019 dành cho tất cả khách hàng có sử dụng thẻ Scoin để nạp và tiêu dùng ingame.");
-    result = data.replace(/\$OG_IMAGE/g, 'https://i.postimg.cc/SsGBL0MR/image-2019-08-08-T09-04-12-114-Z.png');
+    data = data.replace(/\$OG_TITLE/g, 'Vòng Quay tháng 10 - Thử vận may rinh ngay Iphone 11 Pro Max');
+    data = data.replace(/\$OG_DESCRIPTION/g, "SK khuyến mại thẻ Scoin từ 28/10 - 04/11/2019 dành cho tất cả game thủ VTC Mobile.");
+    result = data.replace(/\$OG_IMAGE/g, 'https://i.postimg.cc/x10vmZXK/sharepost-vqt10.jpg');
     response.send(result);
   });
 });

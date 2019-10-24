@@ -23,6 +23,7 @@ import bg_rotaion from './khungvongquay.png'
 
 import backtotop from './images/backtotop.png'
 import sukiendangdienra from './images/btn-sukiendangdienra.png'
+import livestream from './images/btn_livestream.png'
 import sapdienra from './images/btn-sapdienra.png'
 import ketthuc from './images/btn-ketthuc.png'
 import logo from './images/logo.png';
@@ -49,6 +50,8 @@ import img_thongbao from './images/img-thongbao.png';
 import img_livestream from './images/img-livestream.png';
 import img_giaithuong_1 from './images/img-giaithuong-1.png';
 import img_giaithuong_2 from './images/img-giaithuong-2.png';
+import img_giaithuong_1m from './images/img-giaithuong-1m.png';
+import img_giaithuong_2m from './images/img-giaithuong-2m.png';
 // import muiten from './images/muiten.png';
 import ReactResizeDetector from 'react-resize-detector'
 import spin from './images/spin.gif';
@@ -191,15 +194,15 @@ class Lucky_Rotation extends React.Component {
 				var data=this.props.dataRotation;
 				if(data!==undefined){
 					if(data.status==='01'){
-						if(data.data.itemOfSpin[1].quantity===0 && data.data.itemOfSpin[4].quantity===0){
-							var time=(1566815400000-Date.now())/1000;
-							this.setState({finished:true})
-							if(time>0){
-								$('#myModal13').modal('show');
-							}else{
-								$('#myModal14').modal('show');
-							}
-						}
+						// if(data.data.itemOfSpin[1].quantity===0 && data.data.itemOfSpin[4].quantity===0){
+						// 	var time=(1566815400000-Date.now())/1000;
+						// 	this.setState({finished:true})
+						// 	if(time>0){
+						// 		$('#myModal13').modal('show');
+						// 	}else{
+						// 		$('#myModal14').modal('show');
+						// 	}
+						// }
 						this.getStatus(data.data.luckySpin);
 						this.timeShowLive(data.data.luckySpin.endDate);
 						this.setState({userTurnSpin:data.data.userTurnSpin, itemOfSpin:data.data.itemOfSpin, luckySpin:data.data.luckySpin, turnsFree:(data.data.userTurnSpin.turnsFree+data.data.userTurnSpin.turnsBuy), isLogin:false, linkLiveStream:data.data.luckySpin.linkLiveStream})
@@ -302,8 +305,8 @@ class Lucky_Rotation extends React.Component {
 		var end=luckySpin.endDate;
 		var time=Date.now();
 
-		var distance_3day=start - 3 * 86400 * 1000;
-		var duration=end-time;
+		// var distance_3day=start - 3 * 86400 * 1000;
+		// var duration=end-time;
 
 		if (time < start) {
 			this.timeRemain(start)
@@ -314,7 +317,13 @@ class Lucky_Rotation extends React.Component {
 			this.setState({ img_status: sukiendangdienra});
 		}
 		if (time > end) {
-			this.setState({ img_status: ketthuc, message_status:"Sự kiện đã kết thúc."});
+			if(luckySpin.linkLiveStream!==""){
+				this.setState({ img_status: livestream});
+				$('#myModal14').modal('show');
+			}else{
+				this.setState({ img_status: ketthuc, message_status:"Sự kiện đã kết thúc."});
+			}
+			
 		}
 	}
 
@@ -335,21 +344,21 @@ class Lucky_Rotation extends React.Component {
 			} else {
 				console.log("Trình duyệt không hỗ trợ localStorage");
 			}
-			window.location.replace(`http://graph.vtcmobile.vn/oauth/authorize?client_id=707fece431a0948c498d43e881acd2c5&redirect_uri=${window.location.protocol}//${window.location.host}/login&agencyid=0`)
-			// window.location.replace(`http://sandbox.graph.vtcmobile.vn/oauth/authorize?client_id=4e7549789b14693eda4e019faaa0c446&agencyid=0&redirect_uri=${window.location.protocol}//${window.location.host}/`);
+			// window.location.replace(`http://graph.vtcmobile.vn/oauth/authorize?client_id=707fece431a0948c498d43e881acd2c5&redirect_uri=${window.location.protocol}//${window.location.host}/login&agencyid=0`)
+			window.location.replace(`http://sandbox.graph.vtcmobile.vn/oauth/authorize?client_id=4e7549789b14693eda4e019faaa0c446&agencyid=0&redirect_uri=${window.location.protocol}//${window.location.host}/`);
 		}else{
 			$('#myModal12').modal('show');
 		}
 	}
 	logoutAction = () => {
 		localStorage.removeItem("user");
-		window.location.replace(
-			`https://graph.vtcmobile.vn/oauth/authorize?client_id=707fece431a0948c498d43e881acd2c5&redirect_uri=${window.location.protocol}//${window.location.host}&action=logout&agencyid=0`,
-		);
-
 		// window.location.replace(
-		// 	`http://sandbox.graph.vtcmobile.vn/oauth/authorize?client_id=4e7549789b14693eda4e019faaa0c446&redirect_uri=${window.location.protocol}//${window.location.host}&action=logout&agencyid=0`,
+		// 	`https://graph.vtcmobile.vn/oauth/authorize?client_id=707fece431a0948c498d43e881acd2c5&redirect_uri=${window.location.protocol}//${window.location.host}&action=logout&agencyid=0`,
 		// );
+
+		window.location.replace(
+			`http://sandbox.graph.vtcmobile.vn/oauth/authorize?client_id=4e7549789b14693eda4e019faaa0c446&redirect_uri=${window.location.protocol}//${window.location.host}&action=logout&agencyid=0`,
+		);
 	}
 
 	start=()=>{
@@ -801,8 +810,8 @@ class Lucky_Rotation extends React.Component {
 					<p className="btn-thamgiangay"><a href="#p2" title="Tham gia ngay"><img src={thamgiangay} alt="Tham gia ngay" width="200" className="img-fluid" /></a></p>
 					<div className="position-absolute-p1">
 						<ul className="nav flex-column menu-left-p1">
-							<li className="pt-6"><a href="https://scoin.vn/nap-tien" title="Nạp Scoin" target="_blank">Nạp Game</a></li>
-							{/* <li className="pt-6"><a href="http://sandbox.scoin.vn/nap-tien" title="Nạp Scoin" target="_blank">Nạp Game</a></li> */}
+							{/* <li className="pt-6"><a href="https://scoin.vn/nap-tien" title="Nạp Scoin" target="_blank">Nạp Game</a></li> */}
+							<li className="pt-6"><a href="http://sandbox.scoin.vn/nap-tien" title="Nạp Scoin" target="_blank">Nạp Game</a></li>
 							<li className="pt-5b"><a href="#" title="Thể lệ" onClick={this.showModalRules}>Thể lệ</a></li>
 							<li className="pt-5b"><a href="#" title="Phần thưởng" onClick={this.showModalBonus}>Phần thưởng</a></li>
 							<li className="pt-5a"><a href="#bvd" title="Vinh danh">Vinh danh</a></li>
@@ -865,7 +874,7 @@ class Lucky_Rotation extends React.Component {
 				</div> */}
 				<div class="bg-ketquaquayso">
 					<h2 class="d-block text-center text-kqqs mb-0 bg-title-mdt">KQ Mã dự thưởng</h2>
-					<h4 class="text-center text-white">Tự động cập nhật sau 19:00 ngày 01/11/2019</h4>
+					<h4 class="text-center text-white">Tự động cập nhật sau 19:00 ngày 03/11/2019</h4>
 					<div class="row px-5">
 						<div class="col-md-6 align-content-center text-center pl-3">
 							<h2 class="text-center pt-4 color-kqqs title-giaidacbiet">GIẢI ĐẶC BIỆT <br />iPhone 11 Pro Max</h2>
@@ -931,8 +940,8 @@ class Lucky_Rotation extends React.Component {
 						<a className="nav-link btn-dv text-uppercase text-nowrap" href="https://www.facebook.com/scoinvtcmobile/" title="Nhận thông báo sk" target="_blank">Nhận thông báo sk</a>
 						</li>
 						<li className="nav-item">
-						<a className="nav-link btn-dv text-uppercase text-nowrap" href="https://scoin.vn/nap-tien" title="Nạp scoin" target="_blank">Nạp Game</a>
-						{/* <a className="nav-link btn-dv text-uppercase text-nowrap" href="http://sandbox.scoin.vn/nap-tien" title="Nạp scoin" target="_blank">Nạp Game</a> */}
+						{/* <a className="nav-link btn-dv text-uppercase text-nowrap" href="https://scoin.vn/nap-tien" title="Nạp scoin" target="_blank">Nạp Game</a> */}
+						<a className="nav-link btn-dv text-uppercase text-nowrap" href="http://sandbox.scoin.vn/nap-tien" title="Nạp scoin" target="_blank">Nạp Game</a>
 						</li>
 						<li className="nav-item">
 						<a className="nav-link btn-dv text-uppercase text-nowrap" href="tel:19001104" title="Hotline hỗ trợ">HOT LINE: 19001104</a>
@@ -965,9 +974,13 @@ class Lucky_Rotation extends React.Component {
 					</div>
 
 					{/* <!-- Modal body --> */}
-					<div class="modal-body w-100">
+					<div class="modal-body w-100 giaithuong-pc">
 						<img src={img_giaithuong_1} class="w-100" />
 						<img src={img_giaithuong_2} class="w-100" />
+					</div>
+					<div class="modal-body w-100 giaithuong-mobile">
+						<img src={img_giaithuong_1m} class="w-100" />
+						<img src={img_giaithuong_2m} class="w-100" />
 					</div>
 					</div>
 				</div>
@@ -1333,8 +1346,8 @@ class Lucky_Rotation extends React.Component {
 						<div className="table-responsive mt-2">              
 							<h5 className="text-thele lead text-center">Bạn đã hết lượt quay!</h5>
 							<p className="text-thele lead text-center">Hãy nạp Scoin để nhận thêm lượt chơi Vòng quay tháng 10.</p>
-							<button type="button" className="btn btn-xacnhan text-white btn-block text-center py-4" onClick={()=>this.openTabNapScoin('https://scoin.vn/nap-tien')}>Nạp Game</button>
-							{/* <button type="button" className="btn btn-xacnhan text-white btn-block text-center py-4" onClick={()=>this.openTabNapScoin('http://sandbox.scoin.vn/nap-tien')}>Nạp Game</button> */}
+							{/* <button type="button" className="btn btn-xacnhan text-white btn-block text-center py-4" onClick={()=>this.openTabNapScoin('https://scoin.vn/nap-tien')}>Nạp Game</button> */}
+							<button type="button" className="btn btn-xacnhan text-white btn-block text-center py-4" onClick={()=>this.openTabNapScoin('http://sandbox.scoin.vn/nap-tien')}>Nạp Game</button>
 						</div>       
 					</div>
 
@@ -1467,8 +1480,8 @@ class Lucky_Rotation extends React.Component {
 								</tbody>
 							</table> 
 							<div class="btn-logout position-relative w-25 mx-auto text-center left-0 top-0">
-								<h5 class="text-center" onClick={()=>this.openTabNapScoin('https://scoin.vn/nap-tien')}><a>Nạp</a></h5>
-								{/* <h5 class="text-center" onClick={()=>this.openTabNapScoin('http://sandbox.scoin.vn/nap-tien')}><a>Nạp</a></h5> */}
+								{/* <h5 class="text-center" onClick={()=>this.openTabNapScoin('https://scoin.vn/nap-tien')}><a>Nạp</a></h5> */}
+								<h5 class="text-center" onClick={()=>this.openTabNapScoin('http://sandbox.scoin.vn/nap-tien')}><a>Nạp</a></h5>
 							</div>             
 							{/* <button type="button" className="btn btn-xacnhan text-white btn-block text-center" onClick={()=>this.openTabNapScoin('https://scoin.vn/nap-game')}>Nạp</button> */}
 						</div>
@@ -1557,9 +1570,9 @@ class Lucky_Rotation extends React.Component {
 						</div>
 
 						<div className="modal-body">
-								{/* <div className="facebook-responsive">
+								<div className="facebook-responsive">
 									<iframe src={linkLiveStream} width="560" height="315" style={{border:'none', overflow:'hidden'}} scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>
-								</div>      */}
+								</div>     
 						</div>
 
 						</div>
