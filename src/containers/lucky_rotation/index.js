@@ -1003,17 +1003,10 @@ class Lucky_Rotation extends React.Component {
 						<p className="text-thele">Khách hàng có tài khoản Scoin. Nếu chưa có, đăng ký <code><a href="https://scoin.vn/thong-tin-ca-nhan" title="Đăng ký" target="_blank">tại đây</a></code>. <br />
 						Nạp game dùng thẻ Scoin mệnh giá tối thiểu 50k trong thời gian từ 00:01 ngày 1 - 23:59 ngày 7</p>
 						<h3 className="text-red">II. Cách thức tham gia sự kiện</h3>
-						<div style={{display:'flex'}}>
-							{/* <div className="bg-orange px-0 py-2 text-center" style={{borderRadius: 4, flex:1}}>Đăng nhập Scoin <br />+<br /> Xác thực số điện thoại</div>
-							<div className="align-self-center" style={{flexGrowgrow: 0, padding: 0}}><span>></span></div>
-							<div className="bg-orange px-0 py-2 text-center" style={{borderRadius: 4, flex:1}}>Nạp ví/Nạp game (Dùng Scoin) <br />+<br /> Nhận lượt chơi</div>
-							<div className="align-self-center" style={{flexGrowgrow: 0, padding: 0}}><span>></span></div>
-							<div className="bg-orange px-0 py-2 text-center" style={{borderRadius: 4, flex:1}}>Chơi vòng quay <br />+<br /> Nhận mã dự thưởng</div>
-							<div className="align-self-center" style={{flexGrowgrow: 0, padding: 0}}><span>></span></div>
-							<div className="bg-orange px-0 py-2 text-center" style={{borderRadius: 4, flex:1}}>So mã dự thưởng với KQXS vào lúc 18h30' ngày 08/08/2019</div> */}
-							<div className="col-4 bg-orange py-2 text-center border border-white rounded-lg"><button type="button" className="btn btn-primary d-block mx-auto mb-3">Bước 1</button><p className="text-dark">Nạp ví/ Nạp game(dùng Scoin)</p> <p className="font-weight-bold text-success my-1">&nabla;</p> <p className="text-dark">Nhận lượt chơi</p></div>          
-          					<div className="col-4 bg-orange py-2 text-center border border-white rounded-lg"><button type="button" className="btn btn-info d-block mx-auto mb-3">Bước 2</button><p className="text-dark">Chơi vòng quay </p> <p className="font-weight-bold text-success my-1">&nabla;</p> <p className="text-dark">Nhận mã dự thưởng</p></div>          
-          					<div className="col-4 bg-orange py-2 text-center border border-white rounded-lg"><button type="button" className="btn btn-success d-block mx-auto mb-3">Bước 3</button><p className="text-dark">So mã dự thưởng với KQ XSMB <br /> 18:30 ngày 26/08/2019</p></div>  
+						<div class="row">
+						<div class="col-4 bg-orange py-2 text-center border border-white rounded-lg"><button type="button" class="btn btn-primary d-block mx-auto mb-3">Bước 1</button><p class="text-dark">Nạp game(thẻ Scoin)</p> <p class="font-weight-bold text-success my-1">&nabla;</p> <p class="text-dark">Nhận lượt chơi</p></div>          
+						<div class="col-4 bg-orange py-2 text-center border border-white rounded-lg"><button type="button" class="btn btn-info d-block mx-auto mb-3">Bước 2</button><p class="text-dark">Chơi vòng quay </p> <p class="font-weight-bold text-success my-1">&nabla;</p> <p class="text-dark">Nhận mã dự thưởng</p></div>          
+						<div class="col-4 bg-orange py-2 text-center border border-white rounded-lg"><button type="button" class="btn btn-success d-block mx-auto mb-3">Bước 3</button><p class="text-dark">So KQ Mã dự thưởng <br /> 18:30 ngày 8 sự kiện</p></div>         
 						</div>
 						<p className="text-thele pt-3">Bước 1:  Nạp game bất kỳ, chọn kênh thẻ cào Scoin mệnh giá tối thiểu 50k. <br />
 						Bước 2: Nhận lượt quay miễn phí, tương ứng với thẻ Scoin nạp thành công:</p>
