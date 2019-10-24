@@ -669,6 +669,7 @@ class Lucky_Rotation extends React.Component {
 				var data=this.props.dataCodeBonus;
 				if(data!==undefined){
 					if(data.status==='01'){
+						console.log(data.data)
 						this.setState({dataCodeBonus:data.data, countCodeBonus:data.data.length, listCodeBonus: data.data.slice(0,5), noti_mdt:false})
 					}else{
 						$('#myModal11').modal('show');
@@ -878,7 +879,7 @@ class Lucky_Rotation extends React.Component {
 				</div> */}
 				<div class="bg-ketquaquayso">
 					<h2 class="d-block text-center text-kqqs mb-0 bg-title-mdt">KQ Mã dự thưởng</h2>
-					<h4 class="text-center text-white">Tự động cập nhật sau 19:00 ngày 03/11/2019</h4>
+					<h4 class="text-center text-white">Tự động cập nhật sau 19:00 ngày 04/11/2019</h4>
 					<div class="row px-5">
 						<div class="col-md-6 align-content-center text-center pl-3">
 							<h2 class="text-center pt-4 color-kqqs title-giaidacbiet">GIẢI ĐẶC BIỆT <br />iPhone 11 Pro Max</h2>
@@ -1085,7 +1086,7 @@ class Lucky_Rotation extends React.Component {
 						<p class="text-thele pl-3"> &bull; Scoin sẽ được cộng trực tiếp vào ví Scoin của khách hàng.<br></br>
 						&bull; Thẻ Scoin: sẽ được lưu trữ trong Tủ đồ sự kiện. Khách hàng có thể xem và sử dụng trực tiếp để nạp điện thoại hoặc nạp vào các game của VTC Mobile.<br></br>
 						&bull; Mã dự thưởng: lưu trữ trong mục Mã dự thưởng. Khách hàng có thể tra cứu dễ dàng.<br></br>
-						&bull; Giải đặc biệt - iPhone 11 Pro Max: Sau khi KQ Mã dự thưởng ngày 8 sự kiện được công bố, BTC sẽ cập nhật thông tin của khách hàng trúng thưởng trong Bảng vinh danh. Khách hàng trúng giải liên hệ Hotline 1900 1104 để được hướng dẫn nhận thưởng.
+						&bull; Giải đặc biệt - iPhone 11 Pro Max: Sau khi KQ Mã dự thưởng ngày 04/11/2019 được công bố, BTC sẽ cập nhật thông tin của khách hàng trúng thưởng trong Bảng vinh danh. Khách hàng trúng giải liên hệ Hotline 1900 1104 để được hướng dẫn nhận thưởng.
 						</p>
 
 						<h3 class="text-red">IV. Thời gian trao thưởng</h3>
@@ -1246,7 +1247,7 @@ class Lucky_Rotation extends React.Component {
 							<div className="pagination justify-content-center pag-custom">
 								<Pagination
 									activePage={activeCodeBonus}
-									itemsCountPerPage={limit}
+									itemsCountPerPage={5}
 									totalItemsCount={countCodeBonus}
 									pageRangeDisplayed={numberPage}
 									lastPageText={'Trang cuối'}
@@ -1282,23 +1283,35 @@ class Lucky_Rotation extends React.Component {
 									{(code)?(
 									<div>
 										<div className="text-chucmung text-center" style={{marginTop:70}}>
-											<span className="pt-1 d-block">Bạn vừa nhận được Mã số dự thưởng giải hiện vật <span style={{fontWeight:'bold'}}>iPhone 11 Pro Max 256GB</span></span>
+											<span className="text-white">Bạn vừa quay vào ô</span>
+											<span className="pt-1 d-block">Mã số dự thưởng iPhone 11 Pro Max 256GB đã được lưu trong Mã dự thưởng.</span>
+											{/* <span className="pt-1 d-block">Bạn vừa nhận được Mã số dự thưởng giải hiện vật <span style={{fontWeight:'bold'}}>iPhone 11 Pro Max 256GB</span></span> */}
 										</div>
-										<p style={{textAlign:'center', fontSize:30, fontWeight:'bold'}}>{itemBonus.value}</p>
+										{/* <p style={{textAlign:'center', fontSize:30, fontWeight:'bold'}}>{itemBonus.value}</p> */}
 									
 										<p className="small pt-2 mb-2 text-center">So KQ Mã số dự thưởng vào lúc 19:00 ngày 04/11/2019.<br /><label title="Xem phần thưởng" className="underline pt-2 d-block" style={{color:"#fff", cursor:'pointer'}} onClick={this.showModalCodeBonus}>Xem phần thưởng</label></p>
 										<button type="button" className="btn btn-xacnhan text-white btn-block text-center" onClick={this.hideModalDetailBonus}>Xác nhận</button>
 									</div>
 									):(
 									<div>
-										<div className="text-chucmung text-center" style={{marginTop:70}}>
-											{(scoinCard)?(<span>Bạn vừa quay vào ô <span style={{color:'red'}}>thẻ Scoin {itemBonus.value}VND</span></span>):(<span>Bạn vừa nhận được <span style={{color:'red'}}>{itemBonus.value} Scoin</span></span>)}
+										{(scoinCard)?(<div><div className="text-chucmung text-center" style={{marginTop:70}}>
+											<span>Bạn vừa quay vào ô <span style={{color:'red'}}>thẻ Scoin {itemBonus.value}VND</span></span>
 										</div>
-										<p className="small pt-2 mb-2 text-center">(Phần thưởng đã được chuyển vào Tủ đồ sự kiện) <br /><label title="Xem phần thưởng" className="underline pt-2 d-block" style={{color:"#fff", cursor:'pointer'}} onClick={this.showModalTuDo}>Xem phần thưởng</label></p>
+										<p className="small pt-2 mb-2 text-center">(Phần thưởng đã được chuyển vào Tủ đồ sự kiện) <br /><label title="Xem phần thưởng" className="underline pt-2 d-block" style={{color:"#fff", cursor:'pointer'}} onClick={this.showModalTuDo}>Xem phần thưởng</label></p></div>):(
+											<div>
+											<div className="text-chucmung text-center" style={{marginTop:70}}>
+											<span>Bạn vừa nhận được <span style={{color:'red'}}>{itemBonus.value} Scoin</span></span>
+										</div>
+										<p className="small pt-2 mb-2 text-center">(Phần thưởng đã được cộng vào ví Scoin) <br /><label title="Xem phần thưởng" className="underline pt-2 d-block" style={{color:"#fff", cursor:'pointer'}} onClick={this.showModalTuDo}>Xem phần thưởng</label></p>
+										</div>
+										)}
+									
 										<button type="button" className="btn btn-xacnhan text-white btn-block text-center" onClick={this.hideModalDetailBonus}>Xác nhận</button>
 									</div>
 									)}	
 									
+
+
 								</div>
 							</div>
 						</div>

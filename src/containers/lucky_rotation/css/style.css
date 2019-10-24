@@ -99,8 +99,8 @@ a.btn-dv:hover {color: #ffd102;}
 .text-chucmung img {width: 115px}
 #myModal4 .popup-phanthuong { background-color: transparent; border: none;}
 #myModal4 .close {position: absolute; top: 5%; right: 20%; opacity: 1; z-index: 99;}
-.noti-tudo {top: 35%; right: 0;}
-.noti-mdt {top: 20%; right: 0;}
+.noti-mdt {top: 52%; right: 15%;}
+.noti-tudo {top: 15%; right: 15%;}
 .bg-step {width: 50px; height: 50px; line-height: 50px; background-color:#FFFFFF; margin: 0 auto}
 .list-group-flush .list-group-item {display: list-item; padding-left: 30px;}
 .list-group.list-group-flush{
@@ -265,6 +265,8 @@ a.btn-dv:hover {color: #ffd102;}
 	.container.jumbotron {margin-top:0;}
 	#myModal4 .close {position: absolute; top: 7%; right: 7%; opacity: 1; z-index: 99;}
 	.text-popup-phanthuong {font-size: 11px}
+	.noti-mdt {top: 45%; right: 15%;}
+	.noti-tudo {top: 13%; right: 15%;}
 	 /* .mstt {width: 75%;} */
 	 /* .bg-ketquaquayso {height: 250px;} */
 }
@@ -295,39 +297,37 @@ a.btn-dv:hover {color: #ffd102;}
 }
 
 #button {
-  display: inline-block;
-  background-color: #FF9800;
-  width: 50px;
-  height: 50px;
-  line-height: 50px;
-  color: #fff;
-  text-align: center;
-  border-radius: 4px;
-  position: fixed;
-  bottom: 30px;
-  right: 30px;
-  transition: background-color .3s, 
-    opacity .5s, visibility .5s;
-  opacity: 0;
-  visibility: hidden;
-  z-index: 1000;
-}
-#button::after {
-  font-weight: normal;
-  font-style: normal;
-  font-size: 2em;
-  line-height: 50px;
-  color: #fff;
-}
-#button:hover {
-  cursor: pointer;
-  background-color: #333;
-}
-#button:active {
-  background-color: #555;
-}
-#button.show {
-  opacity: 1;
-  visibility: visible;
-}
+	display: inline-block;
+	background-color: #FF9800;
+	width: 50px;
+	height: 50px;
+	line-height: 50px;
+	color: #fff;
+	text-align: center;
+	border-radius: 4px;
+	position: fixed;
+	bottom: 30px;
+	right: 30px;
+	transition: background-color .3s, 
+	  opacity .5s, visibility .5s;
+	z-index: 1000;
+  }
+  #button::after {
+	font-weight: normal;
+	font-style: normal;
+	font-size: 2em;
+	line-height: 50px;
+	color: #fff;
+  }
+  #button:hover {
+	cursor: pointer;
+	background-color: #333;
+  }
+  #button:active {
+	background-color: #555;
+  }
+  #button.show {
+	opacity: 1;
+	visibility: visible;
+  }
 
