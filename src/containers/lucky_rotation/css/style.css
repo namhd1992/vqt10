@@ -72,7 +72,7 @@ html {scroll-behavior: smooth;}
 .pag-custom .page-link {background-color: #fff; border-color: #868e94; border-radius: 4px; color:#868e94; font-size:18px; padding: 2px 10px}
 .pag-custom .page-be {background-color: #b30101; border-color: #b30101;}
 .pag-custom .page-item.active .page-link {background-color: #b30101; border-color: #b30101;}
-.btn-dv {background-color: #b30101 !important; border-color: #b30101 !important; border-radius: 4px !important; color:#FFFFFF !important; margin: 2px 1px}
+.btn-dv {background-color: #b30101 !important; border-color: #b30101 !important; border-radius: 4px !important; color:#FFFFFF !important; margin: 10px 1px}
 a.btn-dv:hover {color: #ffd102;}
 .footer {background:url(../images/bg-footer.jpg) center bottom no-repeat; color:#fff; padding: 60px 0; line-height: 20px}
 .popup-phanthuong h4 {text-align: center; margin-top: -30px; width: 180px;}
@@ -188,12 +188,13 @@ a.btn-dv:hover {color: #ffd102;}
 	.btn-thamgiangay {position: absolute; bottom: 150px; width: 150px;}
 	.position-absolute-p1 {top: 20%; left: 1%;}
 	.btn-logout {position: absolute; top: 5%; right: 3%;}
-	.content-inner-p2 {background: none}
+	.content-inner-p2 {background: none; height: 900px;}
 	.logo-p2 {top: 0; left: 0; width: 60%;}
 	.page2 {background-position: 35% 10%; background-size: 160%;}
 	.vqmm {position: absolute; top: 15%; left: 16%; width: 560px;}
 	.menu-right {bottom: 50%;}
-	.btn-quay { bottom: 15%; left: 35%;}
+	/* .btn-quay { bottom: 15%; left: 35%;} */
+	.btn-quay { bottom: 2%; left: 35%;}
 	.text-kqqs {padding-top: 0; color:#fff;}
 	.bg-ketquaquayso {background: none; height: auto;}
 	.bg-title-mdt {background:url(../images/btn-ketquaquayso.png) center no-repeat; background-size: 100%; width: 300px; height: 93px; font-size: 36px; line-height: 93px; overflow:hidden; margin: 0 auto;}
@@ -251,7 +252,8 @@ a.btn-dv:hover {color: #ffd102;}
 	.logo-p2 {top: 0; left: 12%; width: 260px;}
 	.vqmm {position: absolute; top: 15%; left: 18%; width: 300px}
 	.page2 {background-position: 35% 10%; background-size: 160%;}
-	.btn-quay {width:140px; bottom: 2%; left: 28%;}
+	/* .btn-quay {width:140px; bottom: 2%; left: 28%;} */
+	.btn-quay {width:140px; bottom: 2%; left: 31%;}
 	.btn-quay .custom-control {font-size: 14px; padding-top: 8px; line-height: 30px}
 	.content-inner-p2 {height: 600px;}
 	.menu-right {position: absolute; right: 1%; top: 20%; width: 60px; height: 200px; background-size: 100%;}
@@ -276,6 +278,7 @@ a.btn-dv:hover {color: #ffd102;}
 	.page2 {background-position: 35% 10%; background-size: 180%;}
 	.content-inner-p2 {height: 600px;}
 	.logo-p2 {top: 0; left: 10%; width: 250px;}
+	.btn-quay {left: 30%;}
 }
 @media (max-width: 360px) {
 	.content-inner-p1 {background-position: center bottom; height: 620px; background-size: 160%;}
@@ -283,6 +286,7 @@ a.btn-dv:hover {color: #ffd102;}
 	.page2 {background-position: 35% 8%; background-size: 160%;}
 	.content-inner-p2 {height: 600px;}
 	.logo-p2 {top: 0; left: 10%; width: 220px;}
+	.btn-quay {left: 29%;}
 }
 @media (max-width: 320px) {
 	.vqmm {position: absolute; top: 10%; left: 15%; width: 250px}
@@ -292,6 +296,9 @@ a.btn-dv:hover {color: #ffd102;}
 	.logo-p2 {top: 0; left: 15%; width: 200px;}
 	.content-inner-p2 {height: 500px;}
 	.bg-ketquaquayso .row .col-6 .pt-4 {padding-top: .5rem !important}
+	.btn-quay {left: 27%;}
+
+
 	/* .bg-ketquaquayso {height: 200px;} */
 	/* .text-kqqs {padding-top: 30px;} */
 }

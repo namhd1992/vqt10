@@ -167,16 +167,16 @@ class Lucky_Rotation extends React.Component {
 				var data=this.props.dataRotationWithUser;
 				if(data!==undefined){
 					if(data.status==='01'){
-						if(data.data.itemOfSpin[1].quantity===0 && data.data.itemOfSpin[4].quantity===0){
-							var time=(1554984000000-Date.now())/1000;
-							this.setState({finished:true})
-							if(time>0){
-								$('#myModal13').modal('show');
-							}else{
-								$('#myModal14').modal('show');
-							}
+						// if(data.data.itemOfSpin[1].quantity===0 && data.data.itemOfSpin[4].quantity===0){
+						// 	var time=(1554984000000-Date.now())/1000;
+						// 	this.setState({finished:true})
+						// 	if(time>0){
+						// 		$('#myModal13').modal('show');
+						// 	}else{
+						// 		$('#myModal14').modal('show');
+						// 	}
 							
-						}
+						// }
 						this.getStatus(data.data.luckySpin);
 						this.timeShowLive(data.data.luckySpin.endDate);
 						this.setState({userTurnSpin:data.data.userTurnSpin, user:user, itemOfSpin:data.data.itemOfSpin, luckySpin:data.data.luckySpin, turnsFree:(data.data.userTurnSpin.turnsFree+data.data.userTurnSpin.turnsBuy), isLogin:true, linkLiveStream:data.data.luckySpin.linkLiveStream})
@@ -195,15 +195,15 @@ class Lucky_Rotation extends React.Component {
 				var data=this.props.dataRotation;
 				if(data!==undefined){
 					if(data.status==='01'){
-						if(data.data.itemOfSpin[1].quantity===0 && data.data.itemOfSpin[4].quantity===0){
-							var time=(1554984000000-Date.now())/1000;
-							this.setState({finished:true})
-							if(time>0){
-								$('#myModal13').modal('show');
-							}else{
-								$('#myModal14').modal('show');
-							}
-						}
+						// if(data.data.itemOfSpin[1].quantity===0 && data.data.itemOfSpin[4].quantity===0){
+						// 	var time=(1554984000000-Date.now())/1000;
+						// 	this.setState({finished:true})
+						// 	if(time>0){
+						// 		$('#myModal13').modal('show');
+						// 	}else{
+						// 		$('#myModal14').modal('show');
+						// 	}
+						// }
 						this.getStatus(data.data.luckySpin);
 						this.timeShowLive(data.data.luckySpin.endDate);
 						this.setState({userTurnSpin:data.data.userTurnSpin, itemOfSpin:data.data.itemOfSpin, luckySpin:data.data.luckySpin, turnsFree:(data.data.userTurnSpin.turnsFree+data.data.userTurnSpin.turnsBuy), isLogin:false, linkLiveStream:data.data.luckySpin.linkLiveStream})
@@ -318,7 +318,7 @@ class Lucky_Rotation extends React.Component {
 			this.setState({ img_status: sukiendangdienra});
 		}
 		if (time > end) {
-			if(luckySpin.linkLiveStream!==""){
+			if(luckySpin.linkLiveStream!=="" && time < 1572872400000){
 				this.setState({ img_status: livestream});
 				$('#myModal14').modal('show');
 			}else{
@@ -761,11 +761,9 @@ class Lucky_Rotation extends React.Component {
 	}
 
 	showPopupLiveStream=()=>{
-		var time=(1566815400000-Date.now())/1000;
+		var time=(1572868800000-Date.now())/1000;
 		if(time>0){
-			this.setState({message_error:'Chưa đến thời điểm live stream'},()=>{
-				$('#myModal11').modal('show');
-			})
+			$('#myModal13').modal('show');
 		}else{
 			$('#myModal14').modal('show');
 		}
@@ -879,14 +877,19 @@ class Lucky_Rotation extends React.Component {
 				</div> */}
 				<div class="bg-ketquaquayso">
 					<h2 class="d-block text-center text-kqqs mb-0 bg-title-mdt">KQ Mã dự thưởng</h2>
-					<h4 class="text-center text-white">Tự động cập nhật sau 19:00 ngày 04/11/2019</h4>
+					<h4 class="text-center text-white">Tự động cập nhật sau livestream lúc 19:00 ngày 04/11/2019</h4>
 					<div class="row px-5">
 						<div class="col-md-6 align-content-center text-center pl-3">
 							<h2 class="text-center pt-4 color-kqqs title-giaidacbiet">GIẢI ĐẶC BIỆT <br />iPhone 11 Pro Max</h2>
 							<img src={iphone_11_pro_max} width="70%" class="img-fluid text-center bg-img-giaithuong" />
 						</div>
 						<div class="col-md-6 mstt">
-							<h2 class="text-center color-kqqs title-giaidacbiet">Mã số trúng thưởng<br /> <span class="badge badge-secondary p-3" style={{width: 120, height: 40}}>----</span></h2>
+						<h2 class="text-center color-kqqs title-giaidacbiet">Mã số trúng thưởng<br /> <span class="badge badge-secondary p-3" style={{width: 120, height: 40}}>----</span><br />
+						{(!isLive)?(<div className="button-bt">
+						<button class="btn btn-dv" onClick={this.showPopupLiveStream}><h5 class="glow mb-0 small"><img src={spin} width="24" class="pr-1" alt=""/> Xem livestream </h5></button>
+
+						</div>):(<div></div>)}
+						</h2>
 							
 						</div>
 					</div>
@@ -954,9 +957,9 @@ class Lucky_Rotation extends React.Component {
 					</ul>
 				</div>
 			</div>
-			{(isLive)?(<div className="button-bt">
+			{/* {(isLive)?(<div className="button-bt">
 				<button type="button" className="btn fixed-bottom btn-dv btn-block" onClick={this.showPopupLiveStream}><h5 className="glow mb-0"><img src={spin} width="24" className="pr-1" alt=""/> Xem livestream so Mã dự thưởng tại đây sau: {hour_live}giờ&nbsp;&nbsp;{minute_live}phút&nbsp;&nbsp;{second_live}giây </h5></button>
-			</div>):(<div></div>)}
+			</div>):(<div></div>)} */}
 			
 
 
@@ -1081,7 +1084,7 @@ class Lucky_Rotation extends React.Component {
 						</table>
 						</div>
 						<p class="text-thele pt-3 pl-3"> &bull; Bước 3: Chơi vòng quay tại link: <a style={{color:'#0066ff', textDecoration:'underline'}}>www.vongquayt10.splay.vn</a> để nhận Mã dự thưởng (Cần đăng nhập bằng tài khoản Scoin để chơi). <br></br>
-						&bull; Bước 4: Mã dự thưởng dùng để đối chiếu với KQ Mã dự thưởng ngày 8 sự kiện để xác định trúng thưởng: <strong>1 điện thoại iPhone 11 Pro Max 256GB</strong></p>
+						&bull; Bước 4: Mã dự thưởng dùng để đối chiếu với KQ Mã dự thưởng ngày 04/11/2019 để xác định trúng thưởng: <strong>1 điện thoại iPhone 11 Pro Max 256GB</strong></p>
 						<h3 class="text-red">III. Các giải thưởng</h3>
 						<p class="text-thele pl-3"> &bull; Scoin sẽ được cộng trực tiếp vào ví Scoin của khách hàng.<br></br>
 						&bull; Thẻ Scoin: sẽ được lưu trữ trong Tủ đồ sự kiện. Khách hàng có thể xem và sử dụng trực tiếp để nạp điện thoại hoặc nạp vào các game của VTC Mobile.<br></br>
@@ -1302,7 +1305,7 @@ class Lucky_Rotation extends React.Component {
 											<div className="text-chucmung text-center" style={{marginTop:70}}>
 											<span>Bạn vừa nhận được <span style={{color:'red'}}>{itemBonus.value} Scoin</span></span>
 										</div>
-										<p className="small pt-2 mb-2 text-center">(Phần thưởng đã được cộng vào ví Scoin) <br /><label title="Xem phần thưởng" className="underline pt-2 d-block" style={{color:"#fff", cursor:'pointer'}} onClick={this.showModalTuDo}>Xem phần thưởng</label></p>
+										<p className="small pt-2 mb-2 text-center">(Phần thưởng đã được cộng vào ví Scoin)</p>
 										</div>
 										)}
 									
@@ -1560,9 +1563,11 @@ class Lucky_Rotation extends React.Component {
 
 						{/* <!-- Modal body --> */}
 						<div className="modal-body">
-							<div className="table-responsive mt-2">           
-								<h5 className="text-thele lead text-center">Kết quả trúng thưởng iPhone 11 Pro Max 256GB sẽ được công bố sau ngày 04/11/2019.</h5>
-								<h5 className="text-thele lead text-center">Đón xem live stream buổi so mã Dự thưởng vào lúc 19:00 ngày 04/11 trang sự kiện này hoặc tại fanpage Scoin: <a href="https://www.facebook.com/scoinvtcmobile/">https://www.facebook.com/scoinvtcmobile/</a></h5>
+							<div className="table-responsive mt-2"> 
+								<h3 class="text-center text-red">Livestream chưa diễn ra.</h3>          
+								<h5 className="text-thele lead text-center">Mời quay lại vào lúc 19:00 ngày 04/11/2019 để xem trực tiếp buổi so Mã dự thưởng trúng iPhone 11 Pro Max 256Gb</h5>
+								<p class="text-center text-thele">Phát sóng trực tiếp tại trang sự kiện <a style={{color:'#0066ff', textDecoration:'underline'}}>https://vongquayt10.splay.vn</a></p>
+								<p class="text-center text-thele">Và fanpage Scoin: <a href="https://www.facebook.com/scoinvtcmobile" title="Fanpage Scoin" target="_blank">https://www.facebook.com/scoinvtcmobile</a></p>
 								<h5 className="text-thele lead text-center">BTC trân trọng thông báo.</h5>
 								<button type="button" className="btn btn-xacnhan text-white btn-block text-center py-4" onClick={this.closePopupFinish}>Xác nhận</button>
 							</div>       
@@ -1590,6 +1595,27 @@ class Lucky_Rotation extends React.Component {
 						</div>
 					</div>
 				</div>
+				{/* <div class="modal fade" id="myModal8">
+					<div class="modal-dialog">
+						<div class="modal-content popup-phanthuong">
+						<div class="modal-header border-bottom-0">
+							<h4 class="modal-title w-100 text-center"><img src="images/img-thongbao.png" alt="" /></h4>
+							<button type="button" class="close" data-dismiss="modal"><img src="images/btn-close.png" alt="Đóng" /></button>
+						</div>
+						<div class="modal-body">
+								<div class="facebook-responsive">
+									<iframe src={linkLiveStream} width="560" height="315" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>                
+								</div>
+								<h3 class="text-center text-red">Livestream chưa diễn ra.</h3>
+								<p class="text-center text-thele">Mời quay lại vào lúc 19:00 ngày 04/11/2019 để xem trực tiếp buổi so Mã dự thưởng trúng iPhone 11 Pro Max 256Gb</p>
+								<p class="text-center text-thele">Phát sóng trực tiếp tại trang sự kiện <a href="https://vongquayt10.splay.vn" title="Vòng quay tháng 10">https://vongquayt10.splay.vn</a></p>
+								<p class="text-center text-thele">Và fanpage Scoin: <a href="https://www.facebook.com/scoinvtcmobile" title="Fanpage Scoin" target="_blank">https://www.facebook.com/scoinvtcmobile</a></p>
+								<button type="button" class="btn btn-xacnhan text-white btn-block text-center py-4">Xác nhận</button>   
+						</div>
+
+						</div>
+					</div>
+				</div> */}
 				<ReactResizeDetector handleWidth={true} handleHeight={true} onResize={this.onResize} />
 
 
