@@ -1,7 +1,7 @@
 const express = require('express');
 const app = express();
-const port = process.env.PORT || 3004;
-// const port = process.env.PORT || 3003;
+// const port = process.env.PORT || 3004;
+const port = process.env.PORT || 3003;
 const path = require('path');
 const fs = require('fs')
 
@@ -18,7 +18,7 @@ app.get('/', function(request, response) {
     if (err) {
       return console.log(err);
     }
-    data = data.replace(/\$OG_URL/g, 'https://vongquayt8.splay.vn/');
+    data = data.replace(/\$OG_URL/g, 'https://vongquayt10.splay.vn/');
     data = data.replace(/\$OG_TYPE/g, "Game");
     data = data.replace(/\$OG_TITLE/g, 'Vòng Quay tháng 10 - Thử vận may rinh ngay Iphone 11 Pro Max');
     data = data.replace(/\$OG_DESCRIPTION/g, "SK khuyến mại thẻ Scoin từ 28/10 - 04/11/2019 dành cho tất cả game thủ VTC Mobile.");

@@ -36,19 +36,19 @@ class MenuAppBar extends React.Component {
 		} else {
 			console.log("Trình duyệt không hỗ trợ localStorage");
 		}
-		// window.location.replace(`http://graph.vtcmobile.vn/oauth/authorize?client_id=58306439627cac03c8e4259a87e2e1ca&agencyid=0&redirect_uri=${window.location.protocol}//${window.location.host}/`);
-		window.location.replace(`http://sandbox.graph.vtcmobile.vn/oauth/authorize?client_id=4e7549789b14693eda4e019faaa0c446&agencyid=0&redirect_uri=${window.location.protocol}//${window.location.host}/`);
+		window.location.replace(`http://graph.vtcmobile.vn/oauth/authorize?client_id=58306439627cac03c8e4259a87e2e1ca&agencyid=0&redirect_uri=${window.location.protocol}//${window.location.host}/`);
+		// window.location.replace(`http://sandbox.graph.vtcmobile.vn/oauth/authorize?client_id=4e7549789b14693eda4e019faaa0c446&agencyid=0&redirect_uri=${window.location.protocol}//${window.location.host}/`);
 	}
 
 	logoutAction = () => {
 		this.setState({ auth: false });
 		localStorage.removeItem("user");
-		// window.location.replace(
-		// 	`https://graph.vtcmobile.vn/oauth/authorize?client_id=58306439627cac03c8e4259a87e2e1ca&redirect_uri=${window.location.protocol}//${window.location.host}&action=logout&agencyid=0`,
-		// );
 		window.location.replace(
-			`http://sandbox.graph.vtcmobile.vn/oauth/authorize?client_id=4e7549789b14693eda4e019faaa0c446&redirect_uri=${window.location.protocol}//${window.location.host}&action=logout&agencyid=0`,
+			`https://graph.vtcmobile.vn/oauth/authorize?client_id=58306439627cac03c8e4259a87e2e1ca&redirect_uri=${window.location.protocol}//${window.location.host}&action=logout&agencyid=0`,
 		);
+		// window.location.replace(
+		// 	`http://sandbox.graph.vtcmobile.vn/oauth/authorize?client_id=4e7549789b14693eda4e019faaa0c446&redirect_uri=${window.location.protocol}//${window.location.host}&action=logout&agencyid=0`,
+		// );
 	}
 
 	componentDidMount() {
@@ -94,8 +94,8 @@ class MenuAppBar extends React.Component {
 			if (code != null) {
 				if (fb_mess === null) {
 					var url = Ultilities.base_url() + "signin";
-					// var redirect = `http://graph.vtcmobile.vn/oauth/authorize?client_id=58306439627cac03c8e4259a87e2e1ca&redirect_uri=${window.location.protocol}//${window.location.host}`;
-					var redirect = `https://graph.vtcmobile.vn/oauth/authorize?client_id=4e7549789b14693eda4e019faaa0c446&redirect_uri=${window.location.protocol}//${window.location.host}&agencyid=0&imei=GEWO4536NGREGR`;
+					var redirect = `http://graph.vtcmobile.vn/oauth/authorize?client_id=58306439627cac03c8e4259a87e2e1ca&redirect_uri=${window.location.protocol}//${window.location.host}`;
+					// var redirect = `https://graph.vtcmobile.vn/oauth/authorize?client_id=4e7549789b14693eda4e019faaa0c446&redirect_uri=${window.location.protocol}//${window.location.host}&agencyid=0&imei=GEWO4536NGREGR`;
 					var params = {
 						"code": code,
 						"redirect_uri": redirect
@@ -117,8 +117,8 @@ class MenuAppBar extends React.Component {
 					})
 				} else {
 					var url = Ultilities.base_url() + "signin";
-					// var redirect = `http://graph.vtcmobile.vn/oauth/authorize?client_id=58306439627cac03c8e4259a87e2e1ca&redirect_uri=${window.location.protocol}//${window.location.host}/loginwidget`;
-					var redirect = `https://graph.vtcmobile.vn/oauth/authorize?client_id=4e7549789b14693eda4e019faaa0c446&redirect_uri=${window.location.protocol}//${window.location.host}&agencyid=0&imei=GEWO4536NGREGR`;
+					var redirect = `http://graph.vtcmobile.vn/oauth/authorize?client_id=58306439627cac03c8e4259a87e2e1ca&redirect_uri=${window.location.protocol}//${window.location.host}/loginwidget`;
+					// var redirect = `https://graph.vtcmobile.vn/oauth/authorize?client_id=4e7549789b14693eda4e019faaa0c446&redirect_uri=${window.location.protocol}//${window.location.host}&agencyid=0&imei=GEWO4536NGREGR`;
 					var params = {
 						"code": code,
 						"redirect_uri": redirect
