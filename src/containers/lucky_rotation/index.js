@@ -130,6 +130,7 @@ class Lucky_Rotation extends React.Component {
 			linkLiveStream:'',
 			isLive:false,
 			user:{},
+			xacthuc:false,
 		};
 	}
 	componentWillMount(){
@@ -414,6 +415,10 @@ class Lucky_Rotation extends React.Component {
 									$('#myModal13').modal('show');
 								}else if(data.status ==="07"){
 										this.setState({message_status:"Sự kiện chưa diễn ra hoặc đã kết thúc."},()=>{
+										$('#myModal8').modal('show');
+									})
+								}else if(data.status ==="10"){
+									this.setState({message_status:"Bạn cần xác nhận số ĐT để chơi.", xacthuc:true},()=>{
 										$('#myModal8').modal('show');
 									})
 								}else{
@@ -750,6 +755,13 @@ class Lucky_Rotation extends React.Component {
 		window.open(url, '_blank').focus();
 	}
 
+	xacThuc=(url)=> {
+		localStorage.removeItem("user");
+		document.location.reload(true);
+		$('#myModal8').modal('hide');
+		window.open(url, '_blank').focus();
+	}
+
 	findCode=(evt)=>{
 		var value=evt.target.value
 		// this.setState({
@@ -774,7 +786,7 @@ class Lucky_Rotation extends React.Component {
 	}
 
 	render() {
-		const {scoinCard,height, width, dialogLoginOpen, dialogBonus, auto, dialogWarning, textWarning, isLogin, userTurnSpin, day, hour, minute, second, code,numberPage, img_status, message_status, data_auto,message_error,linkLiveStream,
+		const {xacthuc, scoinCard,height, width, dialogLoginOpen, dialogBonus, auto, dialogWarning, textWarning, isLogin, userTurnSpin, day, hour, minute, second, code,numberPage, img_status, message_status, data_auto,message_error,linkLiveStream,
 			 activeTuDo, activeHistory, activeCodeBonus, activeVinhDanh, limit, countCodeBonus, countTuDo, countHistory, countVinhDanh, listHistory, listCodeBonus, listTuDo, listVinhDanh,itemBonus, turnsFree, noti_mdt, noti_tudo, finished, hour_live, minute_live, second_live, isLive, user}=this.state;
 		const { classes } = this.props;
 		const notification_mdt=noti_mdt?(<span className="badge badge-pill badge-danger position-absolute noti-mdt">!</span>):(<span></span>);
@@ -1008,7 +1020,8 @@ class Lucky_Rotation extends React.Component {
 					{/* <!-- Modal body --> */}
 					<div class="modal-body">
 						<h3 class="text-red">I. Đối tượng tham gia</h3>
-						<p class="text-thele pl-3"> &bull; Khách hàng có tài khoản Scoin. Nếu chưa có, đăng ký <code><a href="#" title="Đăng ký" target="_blank">tại đây</a></code>. <br />
+						<p class="text-thele pl-3"> &bull; Khách hàng có tài khoản Scoin. Nếu chưa có, đăng ký <code><a href="https://scoin.vn/" title="Đăng ký" target="_blank">tại đây</a></code>. <br />
+						&bull; Khách hàng cần xác thực số ĐT tại đây nếu chưa thực hiện <code><a href="https://scoin.vn/cap-nhat-sdt" title="Xác Thực" target="_blank">tại đây</a></code>. <br />
 						&bull; Nạp game dùng thẻ Scoin mệnh giá tối thiểu 50k trong thời gian từ 0h 28/10 - 23:59 03/11.</p>
 						<h3 class="text-red">II. Cách thức tham gia sự kiện</h3>
 						<div class="row">
@@ -1384,6 +1397,8 @@ class Lucky_Rotation extends React.Component {
 					<div className="modal-body">
 						<div className="table-responsive mt-2">              
 							<h5 className="text-thele lead text-center">{message_status}</h5>
+							{(xacthuc)?(<button type="button" className="btn btn-xacnhan text-white btn-block text-center py-4" onClick={()=>this.xacThuc('https://scoin.vn/cap-nhat-sdt')}>Xác Thực</button>):(<div></div>)}
+							
 						</div>       
 					</div>
 
