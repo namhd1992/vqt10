@@ -925,9 +925,9 @@ class Lucky_Rotation extends React.Component {
 						<tbody className="top-12">
 						<tr>
 							<td></td>
-							<td>Chưa có</td>
+							<td>sb_32375.5d***</td>
 							<td>iPhone 11 Pro Max 256GB</td>
-							<td>Sau livestream KQ</td>
+							<td>20:00:00 04-11-2019</td>
 						</tr>
 						</tbody>
 					</table>
