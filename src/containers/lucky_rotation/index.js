@@ -162,7 +162,7 @@ class Lucky_Rotation extends React.Component {
 	componentDidMount(){
 		const {img_width, img_height}=this.state;
 		var user = JSON.parse(localStorage.getItem("user"));
-		this.timeShowLive();
+		// this.timeShowLive();
 		if (user !== null) {
 			this.props.getRotationDetailDataUser(user.access_token, 119).then(()=>{
 				var data=this.props.dataRotationWithUser;
@@ -179,7 +179,7 @@ class Lucky_Rotation extends React.Component {
 							
 						// }
 						this.getStatus(data.data.luckySpin);
-						this.timeShowLive(data.data.luckySpin.endDate);
+						// this.timeShowLive(data.data.luckySpin.endDate);
 						this.setState({userTurnSpin:data.data.userTurnSpin, user:user, itemOfSpin:data.data.itemOfSpin, luckySpin:data.data.luckySpin, turnsFree:(data.data.userTurnSpin.turnsFree+data.data.userTurnSpin.turnsBuy), isLogin:true, linkLiveStream:data.data.luckySpin.linkLiveStream})
 					}else{
 						$('#myModal11').modal('show');
@@ -206,7 +206,7 @@ class Lucky_Rotation extends React.Component {
 						// 	}
 						// }
 						this.getStatus(data.data.luckySpin);
-						this.timeShowLive(data.data.luckySpin.endDate);
+						// this.timeShowLive(data.data.luckySpin.endDate);
 						this.setState({userTurnSpin:data.data.userTurnSpin, itemOfSpin:data.data.itemOfSpin, luckySpin:data.data.luckySpin, turnsFree:(data.data.userTurnSpin.turnsFree+data.data.userTurnSpin.turnsBuy), isLogin:false, linkLiveStream:data.data.luckySpin.linkLiveStream})
 					}else{
 						$('#myModal11').modal('show');
@@ -319,7 +319,11 @@ class Lucky_Rotation extends React.Component {
 			this.setState({ img_status: sukiendangdienra});
 		}
 		if (time > end) {
-			if(luckySpin.linkLiveStream!=="" && time < 1572872400000){
+			if(time< 1572868800000){
+				this.setState({ img_status: livestream});
+				this.timeRemain(1572868800000)
+				$('#myModal13').modal('show');
+			}else if(luckySpin.linkLiveStream!=="" && time < 1572872400000){
 				this.setState({ img_status: livestream});
 				$('#myModal14').modal('show');
 			}else{
@@ -897,10 +901,8 @@ class Lucky_Rotation extends React.Component {
 						</div>
 						<div class="col-md-6 mstt">
 						<h2 class="text-center color-kqqs title-giaidacbiet">Mã số trúng thưởng<br /> <span class="badge badge-secondary p-3" style={{width: 120, height: 40}}>----</span><br />
-						{(!isLive)?(<div className="button-bt">
+						
 						<button class="btn btn-dv" onClick={this.showPopupLiveStream}><h5 class="glow mb-0 small"><img src={spin} width="24" class="pr-1" alt=""/> Xem livestream </h5></button>
-
-						</div>):(<div></div>)}
 						</h2>
 							
 						</div>
