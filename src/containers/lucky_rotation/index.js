@@ -328,6 +328,7 @@ class Lucky_Rotation extends React.Component {
 				$('#myModal14').modal('show');
 			}else{
 				this.setState({ img_status: ketthuc, message_status:"Sự kiện đã kết thúc."});
+				$('#myModal14').modal('show');
 			}
 			
 		}
@@ -902,7 +903,7 @@ class Lucky_Rotation extends React.Component {
 							<img src={iphone_11_pro_max} width="70%" class="img-fluid text-center bg-img-giaithuong" />
 						</div>
 						<div class="col-md-6 mstt">
-						<h2 class="text-center color-kqqs title-giaidacbiet">Mã số trúng thưởng<br /> <span class="badge badge-secondary p-3" style={{width: 120, height: 40}}>----</span><br />
+						<h2 class="text-center color-kqqs title-giaidacbiet">Mã số trúng thưởng<br /> <span class="badge badge-secondary p-3" style={{width: 120, height: 50, fontSize:24}}>2135</span><br />
 						
 						<button class="btn btn-dv" onClick={this.showPopupLiveStream}><h5 class="glow mb-0 small"><img src={spin} width="24" class="pr-1" alt=""/> Xem livestream </h5></button>
 						</h2>
