@@ -375,6 +375,7 @@ class Lucky_Rotation extends React.Component {
 		if(time > luckySpin.endDate){
 			this.setState({message_status:"Vòng quay đã kết thúc."},()=>{
 				$('#myModal8').modal('show');
+			})
 		}else{
 			if (user !== null) {
 				if(!finished){
