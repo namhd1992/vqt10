@@ -58,6 +58,7 @@ import spin from './images/spin.gif';
 import $ from 'jquery';
 import 'bootstrap';
 
+import data from './data'
 const styles = {
 	paper: {
 		background: "#fff",
@@ -116,7 +117,7 @@ class Lucky_Rotation extends React.Component {
 			noti_mdt:false,
 			noti_tudo:false,
 			numberPage:3,
-			img_status: sukiendangdienra,
+			img_status: ketthuc,
 			message_status:'',
 			data_auto:[],
 			isSpin:false,
@@ -134,24 +135,6 @@ class Lucky_Rotation extends React.Component {
 		};
 	}
 	componentWillMount(){
-		// if (window.innerWidth <= 320) {
-		// 	this.setState({ width: 242, height: 378, img_width:280, img_height:280});
-		// }
-		// if (window.innerWidth > 320 && window.innerWidth <= 480) {
-		// 	this.setState({ width: 260, height: 405, img_width:300, img_height:300});
-		// }
-		// if (window.innerWidth > 480 && window.innerWidth <= 600) {
-		// 	this.setState({ width: 400, height: 500, img_width:500, img_height:500});
-		// }
-		// if (window.innerWidth > 600 && window.innerWidth <= 768) {
-		// 	this.setState({ width: 485, height: 500, img_width:560, img_height:560});
-		// }
-		// if (window.innerWidth > 768 && window.innerWidth < 1024) {
-		// 	this.setState({ width: 650, height: 700, img_width:750, img_height:750});
-		// }
-		// if (window.innerWidth >= 1024) {
-		// 	this.setState({ width: 645, height: 830, img_width:752, img_height:752});
-		// }
 
 		this.onResize()
 		window.removeEventListener('scroll', this.handleScroll);
@@ -162,63 +145,8 @@ class Lucky_Rotation extends React.Component {
 	componentDidMount(){
 		const {img_width, img_height}=this.state;
 		var user = JSON.parse(localStorage.getItem("user"));
+		this.getVinhDanh();
 		// this.timeShowLive();
-		if (user !== null) {
-			this.props.getRotationDetailDataUser(user.access_token, 119).then(()=>{
-				var data=this.props.dataRotationWithUser;
-				if(data!==undefined){
-					if(data.status==='01'){
-						// if(data.data.itemOfSpin[1].quantity===0 && data.data.itemOfSpin[4].quantity===0){
-						// 	var time=(1554984000000-Date.now())/1000;
-						// 	this.setState({finished:true})
-						// 	if(time>0){
-						// 		$('#myModal13').modal('show');
-						// 	}else{
-						// 		$('#myModal14').modal('show');
-						// 	}
-							
-						// }
-						this.getStatus(data.data.luckySpin);
-						// this.timeShowLive(data.data.luckySpin.endDate);
-						this.setState({userTurnSpin:data.data.userTurnSpin, user:user, itemOfSpin:data.data.itemOfSpin, luckySpin:data.data.luckySpin, turnsFree:(data.data.userTurnSpin.turnsFree+data.data.userTurnSpin.turnsBuy), isLogin:true, linkLiveStream:data.data.luckySpin.linkLiveStream})
-					}else{
-						$('#myModal11').modal('show');
-						this.setState({message_error:'Không lấy được dữ liệu người dùng. Vui lòng tải lại trang.'})
-					}
-				}else{
-					$('#myModal12').modal('show');
-					this.setState({server_err:true})
-				}
-				
-			});
-		} else {
-			this.props.getRotationDetailData(119).then(()=>{
-				var data=this.props.dataRotation;
-				if(data!==undefined){
-					if(data.status==='01'){
-						// if(data.data.itemOfSpin[1].quantity===0 && data.data.itemOfSpin[4].quantity===0){
-						// 	var time=(1554984000000-Date.now())/1000;
-						// 	this.setState({finished:true})
-						// 	if(time>0){
-						// 		$('#myModal13').modal('show');
-						// 	}else{
-						// 		$('#myModal14').modal('show');
-						// 	}
-						// }
-						this.getStatus(data.data.luckySpin);
-						// this.timeShowLive(data.data.luckySpin.endDate);
-						this.setState({userTurnSpin:data.data.userTurnSpin, itemOfSpin:data.data.itemOfSpin, luckySpin:data.data.luckySpin, turnsFree:(data.data.userTurnSpin.turnsFree+data.data.userTurnSpin.turnsBuy), isLogin:false, linkLiveStream:data.data.luckySpin.linkLiveStream})
-					}else{
-						$('#myModal11').modal('show');
-						this.setState({message_error:'Không lấy được dữ liệu.  Vui lòng tải lại trang.'})
-					}
-				}else{
-					$('#myModal12').modal('show');
-					this.setState({server_err:true})
-				}
-			});
-		}
-		this.getVinhDanh(1);
 		
 		let theWheel = new Wheel({
 			'numSegments'       : 10,         // Specify number of segments.
@@ -284,22 +212,9 @@ class Lucky_Rotation extends React.Component {
 		}
 	}
 
-	getVinhDanh=(pageNumber)=>{
-		const {limit}=this.state;
-		this.props.getVinhDanh(119, limit, (pageNumber-1)).then(()=>{
-			var data=this.props.dataVinhDanh;
-			if(data!==undefined){
-				if(data.status==='01'){	
-					this.setState({listVinhDanh:data.data, countVinhDanh:data.totalRecords})
-				}else{
-					$('#myModal11').modal('show');
-					this.setState({message_error:'Không lấy được dữ liệu bảng vinh danh.'})
-				}
-			}else{
-				$('#myModal12').modal('show');
-				this.setState({server_err:true})
-			}
-		});
+	getVinhDanh=()=>{
+		$('#myModal14').modal('show');
+		this.setState({dataVinhDanh:data, countVinhDanh:data.length, listVinhDanh:data.slice(0, 10)})
 	}
 
 	getStatus=(luckySpin)=>{
@@ -368,97 +283,24 @@ class Lucky_Rotation extends React.Component {
 		// );
 	}
 
-	start=()=>{
-		const {turnsFree, itemOfSpin, luckySpin, isSpin, closeAuto, finished}=this.state;
-		var _this = this;
-		var user = JSON.parse(localStorage.getItem("user"));
-		var time=Date.now();
-		if(time > luckySpin.endDate){
-			this.setState({message_status:"Vòng quay đã kết thúc."},()=>{
-				$('#myModal8').modal('show');
-			})
-		}else{
-			if (user !== null) {
-				if(!finished){
-					if(turnsFree>0){
-						this.props.pickCard(user.access_token, luckySpin.id).then(()=>{
-							var data=_this.props.dataPick;
-							var list=this.state.data_auto;
-							if(data!==undefined){
-								if(data.status ==="01"){
-									if(data.data.item.type==="LUCKY_NUMBER"){
-										this.setState({code:true})
-										setTimeout(()=>{
-											this.setState({noti_mdt:true})
-										},2000)
-									}else{
-										if(data.data.item.type!=="ACTION"){
-											setTimeout(()=>{
-												this.setState({noti_tudo:true})
-											},2000)
-											this.getVinhDanh(1);	
-										}
-										if(data.data.item.type==="SCOIN_CARD"){
-											this.setState({scoinCard:true})
-										}
-										this.setState({code:false})
-										
-									}
-									list.push(data.data.item.name);
-									var pos=1;
-									if(data.data.item.type==="SCOIN"){
-										pos=9;
-									}else{
-										var id=_this.props.dataPick.data.id;
-										pos = itemOfSpin.map(function(e) { return e.id; }).indexOf(id);
-									}
-									
-									this.resetWheel();
-									if(!isSpin && closeAuto){
-										this.startSpin(pos+1);
-									}	
-									_this.setState({itemBonus: data.data.item, data_auto: list, closeAuto:true});
-								}else if(data.status ==="04"){
-									$('#myModal13').modal('show');
-								}else if(data.status ==="07"){
-										this.setState({message_status:"Sự kiện chưa diễn ra hoặc đã kết thúc."},()=>{
-										$('#myModal8').modal('show');
-									})
-								}else if(data.status ==="10"){
-									this.setState({message_status:"Bạn cần xác nhận số ĐT để chơi.", xacthuc:true},()=>{
-										$('#myModal8').modal('show');
-									})
-								}else{
-									$('#myModal11').modal('show');
-									this.setState({message_error:'Vòng quay đang có lỗi. Vui lòng tải lại trang.'})
-								}
-							}else{
-								$('#myModal12').modal('show');
-								this.setState({server_err:true})
-							}
-						})
-						
-					}else{
-						$('#myModal6').modal('show');
-					}
-				}else{
-					$('#myModal13').modal('show');
-				}
-			} else {
-				$('#myModal5').modal('show');
-			}
-		}
-		
+
+	loginAction = () => {
+		this.setState({message_status:"Vòng quay đã kết thúc."},()=>{
+			$('#myModal8').modal('show');
+		})
+	}
+	logoutAction = () => {
+		this.setState({message_status:"Vòng quay đã kết thúc."},()=>{
+			$('#myModal8').modal('show');
+		})
 	}
 
 	btnStart=()=>{
-		const {wheelSpinning}=this.state;
-		if(!wheelSpinning){
-			this.setState({data_auto:[], closeAuto:true},()=>{
-				this.start();
-			})
-		}	
+		this.setState({message_status:"Vòng quay đã kết thúc."},()=>{
+			$('#myModal8').modal('show');
+		})
 	}
+
 
 	startSpin=(segmentNumber)=>{
 		const {wheelSpinning, wheelPower, theWheel}=this.state;
@@ -621,52 +463,21 @@ class Lucky_Rotation extends React.Component {
 	}
 
 	showModalTuDo=()=>{
-		var user = JSON.parse(localStorage.getItem("user"));
-		if (user !== null) {
-			this.getDataTuDo(user);
-			$('#myModal4').modal('hide');
-			$('#myModal2').modal('show');
-		}else {
-			$('#myModal5').modal('show');
-		}
+		this.setState({message_status:"Vòng quay đã kết thúc."},()=>{
+			$('#myModal8').modal('show');
+		})
 	}
 
 	getDataTuDo=(user)=>{
-		const {luckySpin, limit, activeTuDo}=this.state;
-		// var offsetTuDo=(pageNumber-1)*limit;
-		this.props.getTuDo(user.access_token, luckySpin.id, limit, (activeTuDo-1)).then(()=>{
-			var data=this.props.dataTuDo;
-			if(data!==undefined){
-				if(data.status==='01'){
-					this.setState({listTuDo:data.data, countTuDo:data.totalRecords, noti_tudo:false})
-				}else{
-					$('#myModal11').modal('show');
-					this.setState({message_error:'Chưa tải được dữ liệu. Vui lòng thử lại'})
-				}
-			}else{
-				$('#myModal12').modal('show');
-				this.setState({server_err:true})
-			}
-		});
+		this.setState({message_status:"Vòng quay đã kết thúc."},()=>{
+			$('#myModal8').modal('show');
+		})
 	}
 
 	getHistory=(user)=>{
-		const {luckySpin, limit, activeHistory}=this.state;
-		// var offsetTuDo=(pageNumber-1)*limit;
-		this.props.getHistoryTuDo(user.access_token, luckySpin.id, limit, (activeHistory-1)).then(()=>{
-			var data=this.props.dataHistoryTuDo;
-			if(data!==undefined){
-				if(data.status==='01'){
-					this.setState({listHistory:data.data, countHistory:data.totalRecords})
-				}else{
-					$('#myModal11').modal('show');
-					this.setState({message_error:'Chưa tải được dữ liệu. Vui lòng thử lại'})
-				}
-			}else{
-				$('#myModal12').modal('show');
-				this.setState({server_err:true})
-			}
-		});
+		this.setState({message_status:"Vòng quay đã kết thúc."},()=>{
+			$('#myModal8').modal('show');
+		})
 	}
 
 	hideModalTuDo=()=>{
@@ -674,29 +485,9 @@ class Lucky_Rotation extends React.Component {
 	}
 
 	showModalCodeBonus=()=>{
-		const {luckySpin, offsetCode, limit}=this.state;
-		var user = JSON.parse(localStorage.getItem("user"));
-		if(user !== null){
-			this.props.getCodeBonus(user.access_token, luckySpin.id, 'LUCKY_NUMBER').then(()=>{
-				var data=this.props.dataCodeBonus;
-				if(data!==undefined){
-					if(data.status==='01'){
-						console.log(data.data)
-						this.setState({dataCodeBonus:data.data, countCodeBonus:data.data.length, listCodeBonus: data.data.slice(0,5), noti_mdt:false})
-					}else{
-						$('#myModal11').modal('show');
-						this.setState({message_error:'Chưa tải được dữ liệu. Vui lòng thử lại'})
-					}
-				}else{
-					$('#myModal12').modal('show');
-					this.setState({server_err:true})
-				}
-			});
-			$('#myModal4').modal('hide');
-			$('#myModal3').modal('show');
-		}else {
-			$('#myModal5').modal('show');
-		}
+		this.setState({message_status:"Vòng quay đã kết thúc."},()=>{
+			$('#myModal8').modal('show');
+		})
 	}
 
 	closePopupAuto=()=>{
@@ -750,12 +541,9 @@ class Lucky_Rotation extends React.Component {
 	}
 
 	handlePageChangeVinhDanh=(pageNumber)=> {
-		this.setState({activeVinhDanh: pageNumber},()=>{
-			this.getVinhDanh(pageNumber)
-		})
-		// const {dataVinhDanh}=this.state;
-		// var newPosition=(pageNumber-1)*10
-		// this.setState({activeVinhDanh: pageNumber, listVinhDanh: dataVinhDanh.slice(newPosition, newPosition+10)});
+		const {dataVinhDanh}=this.state;
+		var newPosition=(pageNumber-1)*10
+		this.setState({activeVinhDanh: pageNumber, listVinhDanh: dataVinhDanh.slice(newPosition, newPosition+10)});
 	}
 
 	openTabNapScoin=(url)=> {
@@ -1609,7 +1397,7 @@ class Lucky_Rotation extends React.Component {
 
 						<div className="modal-body">
 								<div className="facebook-responsive">
-									<iframe src={linkLiveStream} width="560" height="315" style={{border:'none', overflow:'hidden'}} scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>
+									<iframe src='https://www.facebook.com/plugins/video.php?href=https%3A%2F%2Fwww.facebook.com%2Fscoinvtcmobile%2Fvideos%2F2534194866674538%2F&show_text=0&width=560' width="560" height="315" style={{border:'none', overflow:'hidden'}} scrolling="no" frameborder="0" allowTransparency="true" allowFullScreen="true"></iframe>
 								</div>     
 						</div>
 
