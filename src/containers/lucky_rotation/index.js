@@ -369,7 +369,7 @@ class Lucky_Rotation extends React.Component {
 	getDetailData=()=>{
 		const {auto}=this.state;
 		var user = JSON.parse(localStorage.getItem("user"));
-		this.props.getRotationDetailDataUser(user.access_token, 119).then(()=>{
+		this.props.getRotationDetailDataUser(user.access_token, 1).then(()=>{
 			var data=this.props.dataRotationWithUser;
 			if(data!==undefined){
 				var turnsFree=data.data.userTurnSpin.turnsFree+data.data.userTurnSpin.turnsBuy;
